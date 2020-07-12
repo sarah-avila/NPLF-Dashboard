@@ -9,7 +9,11 @@ import plotly.graph_objects as plot
 
 df = pd.read_excel('Temporary Dataset -- VandyHacks Summer 2020.xlsx')
 
-fig1 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Facebook Advertising'], mode='lines+markers'))
+layout = plot.Layout(
+    title="Facebook"
+)
+
+fig1 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Facebook Advertising'], mode='lines+markers', ))
 fig2 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Facebook Reach'], mode='lines+markers', line_color="#ef5a41"))
 fig3 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Google Analytics'], mode='lines+markers', line_color="#00cc96"))
 fig4 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['TwitterReach'], mode='lines+markers', line_color="#9467bd"))
@@ -33,6 +37,13 @@ fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Email Marketing'],
 app = dash.Dash(__name__)
 app.layout = html.Div([
     html.Div([
+            html.H3('Summary'),
+            dcc.Graph(
+                id='g7',
+                figure=fig7,
+        )], className="heading bottom"),
+
+    html.Div([
         html.Div([
             html.H3('Facebook Advertising'),
             dcc.Graph(
@@ -46,7 +57,7 @@ app.layout = html.Div([
                 id='g2', figure=fig2)], 
         className="heading"),
     ], 
-    className="row"),
+    className="row top"),
 
     html.Div([
         html.Div([
@@ -80,19 +91,17 @@ app.layout = html.Div([
         className="heading")],
     className="row"),
 
+    # html.Div([
+    #         html.H3('Summary'),
+    #         dcc.Graph(
+    #             id='g7',
+    #             figure=fig7,
+    #     )], className="heading bottom"),
+
     html.Div([
-            html.H3('Summary'),
-            dcc.Graph(
-        id='g7',
-        figure=fig7,
-    )], className="heading")
+        html.H5('Source: Nashville Public Library Foundation Official Records')
+    ], className="source")
 ],  className="container",)
-
-#stylesheets = ['stylesheet.css']
-
-# app.css.append_css({
-#     'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
-# })
 
 if __name__ == '__main__':
     app.run_server(debug=True)
