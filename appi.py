@@ -30,59 +30,69 @@ fig7.add_trace(plot.Scatter(x=df['Date'], y=df['LinkedIn Reach'],
 fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Email Marketing'],
                     mode='lines+markers', name='Email Marketing'))
 
-app = dash.Dash()
+app = dash.Dash(__name__)
 app.layout = html.Div([
     html.Div([
         html.Div([
             html.H3('Facebook Advertising'),
             dcc.Graph(
-        id='g1',
-        figure=fig1,
-    )],className="six columns"),
+                id='g1',
+                figure=fig1)], 
+        className="heading"),
 
         html.Div([
             html.H3('Facebook Reach'),
-            dcc.Graph(id='g2', figure=fig2)
-        ], className="six columns"),
-    ], className="row"),
+            dcc.Graph(
+                id='g2', figure=fig2)], 
+        className="heading"),
+    ], 
+    className="row"),
+
     html.Div([
         html.Div([
             html.H3('Google Analytics'),
             dcc.Graph(
-        id='g3',
-        figure=fig3,
-    )],className="six columns"),
+                id='g3',
+                figure=fig3)],
+        className="heading"),
 
         html.Div([
             html.H3('Twitter Reach'),
-            dcc.Graph(id='g4', figure=fig4)
-        ], className="six columns"),
-    ], className="row"),
+            dcc.Graph(
+                id='g4', 
+                figure=fig4)], 
+                className="heading")],
+        className="row"),
+
     html.Div([
         html.Div([
             html.H3('LinkedIn Reach'),
             dcc.Graph(
-        id='g5',
-        figure=fig5,
-    )],className="six columns"),
+                id='g5',
+                figure=fig5)],
+        className="heading"),
 
         html.Div([
             html.H3('Email Marketing'),
-            dcc.Graph(id='g6', figure=fig6)
-        ], className="six columns"),
-    ], className="row"),
+            dcc.Graph(
+                id='g6', 
+                figure=fig6)], 
+        className="heading")],
+    className="row"),
+
     html.Div([
             html.H3('Summary'),
             dcc.Graph(
         id='g7',
         figure=fig7,
-    )],className="six columns")
+    )], className="heading")
+],  className="container",)
 
-])
+#stylesheets = ['stylesheet.css']
 
-app.css.append_css({
-    'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
-})
+# app.css.append_css({
+#     'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
+# })
 
 if __name__ == '__main__':
     app.run_server(debug=True)
