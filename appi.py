@@ -16,7 +16,7 @@ layout = plot.Layout(
 fig1 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Facebook Advertising'], mode='lines+markers', ))
 fig2 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Facebook Reach'], mode='lines+markers', line_color="#ef5a41"))
 fig3 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Google Analytics'], mode='lines+markers', line_color="#00cc96"))
-fig4 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['TwitterReach'], mode='lines+markers', line_color="#9467bd"))
+fig4 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Twitter Reach'], mode='lines+markers', line_color="#9467bd"))
 fig5 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['LinkedIn Reach'], mode='lines+markers', line_color="#ffa15a"))
 fig6 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Email Marketing'], mode='lines+markers', line_color="#1cd3f3"))
 fig7 = plot.Figure()
@@ -27,8 +27,8 @@ fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Facebook Reach'],
                     mode='lines+markers', name='Facebook Reach'))
 fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Google Analytics'],
                     mode='lines+markers', name='Google Analytics'))
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['TwitterReach'],
-                    mode='lines+markers', name='TwitterReach'))
+fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Twitter Reach'],
+                    mode='lines+markers', name='Twitter Reach'))
 fig7.add_trace(plot.Scatter(x=df['Date'], y=df['LinkedIn Reach'],
                     mode='lines+markers', name='LinkedIn Reach'))
 fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Email Marketing'],
@@ -37,7 +37,7 @@ fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Email Marketing'],
 app = dash.Dash(__name__)
 app.layout = html.Div([
     html.Div([
-            html.H3('Summary'),
+            html.H3('Summary of May 1 - 13, 2020'),
             dcc.Graph(
                 id='g7',
                 figure=fig7,
