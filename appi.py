@@ -6,6 +6,7 @@ import pandas as pd
 from pandas import ExcelWriter
 from pandas import ExcelFile
 import plotly.graph_objects as plot
+import dash_bootstrap_components as dbc
 
 df = pd.read_excel('Temporary Dataset -- VandyHacks Summer 2020.xlsx')
 
@@ -34,8 +35,37 @@ fig7.add_trace(plot.Scatter(x=df['Date'], y=df['LinkedIn Reach'],
 fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Email Marketing'],
                     mode='lines+markers', name='Email Marketing'))
 
-app = dash.Dash(__name__)
+vertical_navbar = dbc.ButtonGroup(
+    [
+        dbc.Button("Overview"),
+        dbc.Button("Reach"),
+        dbc.Button("Impressions"),
+        dbc.Button("Visits"),
+        dbc.Button("Leads"),
+        dbc.Button("Customers by Marketing"),
+        dbc.Button("Conversions"),
+        
+    ],
+    vertical=True,
+)
+
+horizontal_navbar = dbc.ButtonGroup(
+    [
+         dbc.DropdownMenu(
+            [dbc.DropdownMenuItem("Weekly"), dbc.DropdownMenuItem("Monthly"), dbc.DropdownMenuItem("Quarterly")],
+            label="Overview",
+            group=True,
+        ),
+        dbc.Button("MoM"),
+        dbc.Button("Summary"),
+        
+    ],
+)
+
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = html.Div([
+    vertical_navbar,
+    horizontal_navbar,
     html.Div([
             html.H3('Summary of May 1 - 13, 2020'),
             dcc.Graph(
