@@ -18,8 +18,8 @@ df3 = pd.read_excel('NPLF Twitter Q1.xls', sheet_name = 'NPLF Twitter May')
 df4 = pd.read_excel('NPLF Twitter Q1.xls', sheet_name = 'NPLF Twitter June')
 print(df)
 
-fig = make_subplots(rows=2, cols=2, column_widths=[0.5, 0.5],
-                    subplot_titles=("Engagements in April", "Engagements in May", "engagements in June",))
+#fig = make_subplots(rows=2, cols=2, column_widths=[0.5, 0.5],
+#                    subplot_titles=("Engagements in April", "Engagements in May", "engagements in June",))
 
 fig1 = px.bar(df2, x=df2.Date, y=df2.engagements, title = "Engagements in April")
 fig1.show()
@@ -29,6 +29,25 @@ fig2.show()
 
 fig3 = px.bar(df4, x=df4.Date, y=df4.engagements, title = "Engagements in June")
 fig3.show()
+
+fig4 = px.bar(df2, x=df2.Date, y=df2.likes, title = "Likes in April")
+fig4.show()
+
+fig5 = px.bar(df3, x=df3.Date, y=df3.likes, title = "Likes in May")
+fig5.show()
+
+fig5 = px.bar(df4, x=df4.Date, y=df4.likes, title = "Likes in June")
+fig5.show()
+
+fig6 = px.bar(df2, x=df2.Date, y=df2.impressions, title = "Impressions in April")
+fig6.show()
+
+fig7 = px.bar(df3, x=df3.Date, y=df3.impressions, title = "Impressions in May")
+fig7.show()
+
+fig8 = px.bar(df4, x=df4.Date, y=df4.impressions, title = "Impressions in June")
+fig8.show()
+
 
 
 #fig.add_trace(
