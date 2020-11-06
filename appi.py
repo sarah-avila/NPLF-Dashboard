@@ -36,38 +36,8 @@ fig7.add_trace(plot.Scatter(x=df['Date'], y=df['LinkedIn Reach'],
 fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Email Marketing'],
                     mode='lines+markers', name='Email Marketing'))
 
-# button group definitions
-vertical_navbar = dbc.ButtonGroup(
-    [
-        dbc.Button("Overview"),
-        dbc.Button("Reach"),
-        dbc.Button("Impressions"),
-        dbc.Button("Visits"),
-        dbc.Button("Leads"),
-        dbc.Button("Customers by Marketing"),
-        dbc.Button("Conversions"),
-        
-    ],
-    vertical=True,
-    className="navbar-vertical",
-)
-
-horizontal_navbar = dbc.ButtonGroup(
-    [
-         dbc.DropdownMenu(
-            [dbc.DropdownMenuItem("Weekly"), dbc.DropdownMenuItem("Monthly"), dbc.DropdownMenuItem("Quarterly")],
-            label="Overview",
-            group=True,
-        ),
-        dbc.Button("MoM"),
-        dbc.Button("Summary"),
-        
-    ],
-    className="navbar-horizontal",
-)
-
 # navbar definition
-navbar = dbc.NavbarSimple(
+sticky_navbar = dbc.NavbarSimple(
     children=[
         dbc.DropdownMenu(
             children=[
@@ -89,11 +59,49 @@ navbar = dbc.NavbarSimple(
     sticky="top",
 )
 
+badge = html.Div(
+    [
+       dbc.Badge("NPLF Marketing Dashboard"),
+    ],
+    className="badge",
+)
+
+# button group definitions
+vertical_navbar = dbc.ButtonGroup(
+    [
+        dbc.Button("Overview"),
+        dbc.Button("Reach"),
+        dbc.Button("Impressions"),
+        dbc.Button("Visits"),
+        dbc.Button("Leads"),
+        dbc.Button("Customers by Marketing"),
+        dbc.Button("Conversions"),
+        
+    ],
+    vertical=True,
+    className="navbar-vertical",
+)
+
+# horizontal_navbar = dbc.ButtonGroup(
+#     [
+#          dbc.DropdownMenu(
+#             [dbc.DropdownMenuItem("Weekly"), dbc.DropdownMenuItem("Monthly"), dbc.DropdownMenuItem("Quarterly")],
+#             label="Overview",
+#             group=True,
+#         ),
+#         dbc.Button("MoM"),
+#         dbc.Button("Summary"),
+        
+#     ],
+#     className="navbar-horizontal",
+# )
+
 # app and layout definition
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = html.Div([
+    sticky_navbar,
+    badge,
     vertical_navbar,
-    navbar,
     html.Div([
         html.Div([
                 html.H3('Summary of May 1 - 13, 2020'),

@@ -7,14 +7,25 @@ body {
     font-family: 'Roboto';
 }
 .navbar-vertical {
+    /* background: #343a40; */
+    background-color: #000000;
     position: fixed;
-    top: 200px;
+    top: 230px;
     left: 75px;
     width: 250px;
 }
-.navbar-horizontal {
-    position: absolute;
-    left: 500px;
+.badge {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    height: 70px;
+    top: 145px;
+    left: 75px;
+    width: 250px;
+    /* background: #B3E4A7; */
+    background: #FFFFFF;
+    color: #343a40;
+    font-size: 18px;
 }
 .heading {
     display: flex;
