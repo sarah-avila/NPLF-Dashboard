@@ -41,7 +41,7 @@ sticky_navbar = dbc.NavbarSimple(
     children=[
         dbc.DropdownMenu(
             children=[
-                dbc.DropdownMenuItem("More pages", header=True),
+                dbc.DropdownMenuItem("Time Frame", header=True),
                 dbc.DropdownMenuItem("Weekly", href="#"),
                 dbc.DropdownMenuItem("Monthly", href="#"),
                 dbc.DropdownMenuItem("Quarterly", href="#"),
