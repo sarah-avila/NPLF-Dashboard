@@ -10,18 +10,21 @@ import plotly
 from plotly.subplots import make_subplots
 
 
-excel_file = 'Facebook Posts Q1.xlsx'
+excel_file = '../Facebook Posts Q1.xlsx'
 df = pd.read_excel(excel_file)
 print(df)
 
-fig = make_subplots(rows=3, cols=2, column_widths=[0.5, 0.5],
-                    subplot_titles=("Weekly Total Impressions", "Weekly Page Engaged Users", "Weekly Viral Reach",
-                                    "Weekly Reach of Page Posts","Weekly Organic impressions","Weekly Page Consumptions"))
+fig = make_subplots(rows=4, cols=2, column_widths=[0.5, 0.5],
+                    subplot_titles=("Lifetime Post Total Reach"))
 
 
 
 fig.add_trace(
     go.Scatter(x=df['Post ID'] , y = df[ 'Lifetime Post Total Reach'], mode='lines+markers', line_color="#9467bd"),
+    row=1, col=1
+)
+fig.add_trace(
+    go.Scatter(x=df['Post ID'] , y = df[ 'Lifetime Post Paid Reach'], mode='lines+markers', line_color="#9467bd"),
     row=1, col=2
 )
 fig.update_layout(
