@@ -10,8 +10,8 @@ import plotly
 from plotly.subplots import make_subplots
 
 
-excel_file1 = 'Facebook Posts Q1.xlsx'
-df = pd.read_excel(excel_file1)
+excel_file = 'Facebook Posts Q1.xlsx'
+df = pd.read_excel(excel_file)
 print(df)
 
 fig = make_subplots(rows=3, cols=2, column_widths=[0.5, 0.5],
@@ -37,7 +37,7 @@ autosize=False,
     ),
     paper_bgcolor="LightSteelBlue",
     title=go.layout.Title(
-        text="Facebook Page Quarter 2",
+        text="Facebook Page Quarter 1",
         xref="paper",
         x=0
     ),
