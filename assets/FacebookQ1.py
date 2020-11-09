@@ -15,17 +15,39 @@ df = pd.read_excel(excel_file)
 print(df)
 
 fig = make_subplots(rows=4, cols=2, column_widths=[0.5, 0.5],
-                    subplot_titles=("Lifetime Post Total Reach"))
+                    subplot_titles=("Lifetime Post Total Reach","Lifetime Post Total Reach","Lifetime Post Paid Reach",
+                                    "Lifetime Post Total Impressions","Lifetime Post Organic Impressions","Lifetime Post Paid Impressions",
+                                    "Lifetime Engaged Users","Lifetime Matched Audience Targeting Consumptions on Post"))
 
 
 
 fig.add_trace(
-    go.Scatter(x=df['Post ID'] , y = df[ 'Lifetime Post Total Reach'], mode='lines+markers', line_color="#9467bd"),
-    row=1, col=1
+    go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Post Total Reach'], mode='lines+markers', line_color="#9467bd"),
+    row=1, col=2
 )
 fig.add_trace(
-    go.Scatter(x=df['Post ID'] , y = df[ 'Lifetime Post Paid Reach'], mode='lines+markers', line_color="#9467bd"),
-    row=1, col=2
+    go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Post Paid Reach'], mode='lines+markers', line_color="#9467bd"),
+    row=2, col=1
+)
+fig.add_trace(
+    go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Post Total Impressions'], mode='lines+markers', line_color="#9467bd"),
+    row=2, col=2
+)
+fig.add_trace(
+    go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Post Organic Impressions'], mode='lines+markers', line_color="#9467bd"),
+    row=3, col=1
+)
+fig.add_trace(
+    go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Post Paid Impressions'], mode='lines+markers', line_color="#9467bd"),
+    row=3, col=2
+)
+fig.add_trace(
+    go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Engaged Users'], mode='lines+markers', line_color="#9467bd"),
+    row=4, col=1
+)
+fig.add_trace(
+    go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Matched Audience Targeting Consumptions on Post'], mode='lines+markers', line_color="#9467bd"),
+    row=4, col=2
 )
 fig.update_layout(
 autosize=False,
