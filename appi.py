@@ -7,6 +7,8 @@ from pandas import ExcelWriter
 from pandas import ExcelFile
 import plotly.graph_objects as plot
 import dash_bootstrap_components as dbc
+import dash_core_components as dcc
+from dash.dependencies import Input, Output
 
 df = pd.read_excel('Temporary Dataset -- VandyHacks Summer 2020.xlsx')
 
@@ -36,6 +38,7 @@ fig7.add_trace(plot.Scatter(x=df['Date'], y=df['LinkedIn Reach'],
 fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Email Marketing'],
                     mode='lines+markers', name='Email Marketing'))
 
+"""
 # navbar definition
 sticky_navbar = dbc.NavbarSimple(
     children=[
@@ -58,6 +61,7 @@ sticky_navbar = dbc.NavbarSimple(
     dark=True,
     sticky="top",
 )
+"""
 
 badge = html.Div(
     [
@@ -82,6 +86,11 @@ vertical_navbar = dbc.ButtonGroup(
     className="navbar-vertical",
 )
 
+# date slider labels
+df['Date'] = pd.to_datetime(df.Date)
+dates = ['05-01-2020', '05-04-2020', '05-07-2020', '05-10-2020', '05-13-2020']
+date_mark = {i : dates[i] for i in range(0, 5)}
+
 # horizontal_navbar = dbc.ButtonGroup(
 #     [
 #          dbc.DropdownMenu(
@@ -99,7 +108,7 @@ vertical_navbar = dbc.ButtonGroup(
 # app and layout definition
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = html.Div([
-    sticky_navbar,
+    #sticky_navbar,
     badge,
     vertical_navbar,
     html.Div([
@@ -109,6 +118,21 @@ app.layout = html.Div([
                     id='g7',
                     figure=fig7,
             )], className="heading top"),
+
+
+        # range slider
+                html.P([
+                    html.Label("Time Period"),
+                    dcc.RangeSlider(id = 'slider',
+                                    marks = date_mark,
+                                    min = 0,
+                                    max = 4,
+                                    value = [0, 4]) 
+                        ], style = {'width' : '100%',
+                                    'fontSize' : '20px',
+                                    'padding-left' : '360px',
+                                    'display': 'inline-block'}),
+
 
         html.Div([
             html.Div([
@@ -164,6 +188,38 @@ app.layout = html.Div([
     ], 
     className="container"),
 ])
+
+# Step 5. Add callback functions
+@app.callback(Output('g7', 'figure'),
+             [Input('slider', 'value')])
+def update_figure(X):
+    df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
+    trace_1 = plot.Scatter(x = df2.Date, y = df2['Google Analytics'],
+                        name = 'Google Analytics',
+                        line = dict(width = 2,
+                                    color = '#00cc96'))
+    trace_2 = plot.Scatter(x = df2.Date, y = df2['Facebook Advertising'],
+                        name = 'Facebook Advertising',
+                        line = dict(width = 2,
+                                    color = '#FF5733'))
+    trace_3 = plot.Scatter(x = df2.Date, y = df2['Facebook Reach'],
+                        name = 'Facebook Reach',
+                        line = dict(width = 2,
+                                    color = '#D7BDE2'))
+    trace_4 = plot.Scatter(x = df2.Date, y = df2['Twitter Reach'],
+                        name = 'Twitter Reach',
+                        line = dict(width = 2,
+                                    color = '#9467bd'))
+    trace_5 = plot.Scatter(x = df2.Date, y = df2['LinkedIn Reach'],
+                        name = 'LinkedIn Reach',
+                        line = dict(width = 2,
+                                    color = '#ffa15a'))
+    trace_6 = plot.Scatter(x = df2.Date, y = df2['Email Marketing'],
+                        name = 'Email Marketing',
+                        line = dict(width = 2,
+                                    color = '#1cd3f3'))
+    fig = plot.Figure(data = [trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout = layout)
+    return fig
 
 if __name__ == '__main__':
     app.run_server(debug=True)
