@@ -38,7 +38,7 @@ fig7.add_trace(plot.Scatter(x=df['Date'], y=df['LinkedIn Reach'],
 fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Email Marketing'],
                     mode='lines+markers', name='Email Marketing'))
 
-"""
+
 # navbar definition
 sticky_navbar = dbc.NavbarSimple(
     children=[
@@ -61,7 +61,7 @@ sticky_navbar = dbc.NavbarSimple(
     dark=True,
     sticky="top",
 )
-"""
+
 
 badge = html.Div(
     [
@@ -108,7 +108,7 @@ date_mark = {i : dates[i] for i in range(0, 5)}
 # app and layout definition
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = html.Div([
-    #sticky_navbar,
+    sticky_navbar,
     badge,
     vertical_navbar,
     html.Div([
