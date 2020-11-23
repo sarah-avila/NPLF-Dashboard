@@ -11,13 +11,8 @@ import plotly.graph_objects as go
 import plotly
 from plotly.subplots import make_subplots
 
-
-
-
-
-
-excel_file = 'Facebook Page Q2.xlsx'
-df = pd.read_excel(excel_file)
+excel_file = 'Facebook Posts Q2.xls.xlsx'
+df = pd.read_excel(excel_file )
 print(df)
 
 fig = make_subplots(rows=3, cols=2, column_widths=[0.5, 0.5],
