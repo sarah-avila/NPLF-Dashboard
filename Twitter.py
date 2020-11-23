@@ -22,31 +22,53 @@ print(df)
 #                    subplot_titles=("Engagements in April", "Engagements in May", "engagements in June",))
 
 fig1 = px.bar(df2, x=df2.Date, y=df2.engagements, title = "Engagements in April")
-fig1.show()
+
 
 fig2 = px.bar(df3, x=df3.Date, y=df3.engagements, title = "Engagements in May")
-fig2.show()
+
 
 fig3 = px.bar(df4, x=df4.Date, y=df4.engagements, title = "Engagements in June")
-fig3.show()
+
 
 fig4 = px.bar(df2, x=df2.Date, y=df2.likes, title = "Likes in April")
-fig4.show()
+
 
 fig5 = px.bar(df3, x=df3.Date, y=df3.likes, title = "Likes in May")
-fig5.show()
+
 
 fig5 = px.bar(df4, x=df4.Date, y=df4.likes, title = "Likes in June")
-fig5.show()
+
 
 fig6 = px.bar(df2, x=df2.Date, y=df2.impressions, title = "Impressions in April")
-fig6.show()
+
 
 fig7 = px.bar(df3, x=df3.Date, y=df3.impressions, title = "Impressions in May")
-fig7.show()
+
 
 fig8 = px.bar(df4, x=df4.Date, y=df4.impressions, title = "Impressions in June")
-fig8.show()
+
+trace1 = fig1['data'][0]
+trace2 = fig2['data'][0]
+trace3 = fig3['data'][0]
+trace4 = fig4['data'][0]
+trace5 = fig5['data'][0]
+trace6 = fig6['data'][0]
+trace7 = fig7['data'][0]
+trace8 = fig8['data'][0]
+
+fig = make_subplots(rows=8, cols=1, shared_xaxes=False,  subplot_titles=("Engagements in April", "Engagements in May", "Engagements in June", "Likes in April", "Likes in May", "Likes in June", "Impressions in April" , "Impressions in May", "Impressions in June" ))
+fig.update_layout(height=2700, width=1300, title_text="Twitter")
+fig.add_trace(trace1, row=1, col=1)
+fig.add_trace(trace2, row=2, col=1)
+fig.add_trace(trace3, row=3, col=1)
+fig.add_trace(trace4, row=4, col=1)
+fig.add_trace(trace5, row=5, col=1)
+fig.add_trace(trace6, row=6, col=1)
+fig.add_trace(trace7, row=7, col=1)
+fig.add_trace(trace8, row=8, col=1)
+
+fig.show()
+
 
 
 
@@ -64,51 +86,6 @@ fig8.show()
 #)
 
 
-fig.update_layout(
-autosize=False,
-    width=2000,
-    height=1500,
-    margin=dict(
-        l=50,
-        r=50,
-        b=100,
-        t=100,
-        pad=20
-    ),
-    paper_bgcolor="LightSteelBlue",
-    title=go.layout.Title(
-        text="Facebook Page Quarter 2",
-        xref="paper",
-        x=0
-    ),
-    xaxis=go.layout.XAxis(
-        title=go.layout.xaxis.Title(
-            text="Daily Page Engaged Users",
-            font=dict(
-                family="Comissioner, sans-serif",
-                size=18,
-                color="#7f7f7f"
-            )
-        )
-    ),
-    yaxis=go.layout.YAxis(
-        title=go.layout.yaxis.Title(
-            text="Date",
-            font=dict(
-                family="Comissioner, sans-serif",
-                size=18,
-                color="#7f7f7f"
-            )
-        )
-    )
-)
-fig.show()
-
-
-
-layout = plot.Layout(
-    title="Facebook"
-)
 
 
 fig1 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Facebook Advertising'], mode='lines+markers', ))
