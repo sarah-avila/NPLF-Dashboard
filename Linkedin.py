@@ -10,139 +10,47 @@ import plotly
 from plotly.subplots import make_subplots
 
 
-excel_file = 'ConsolidatedLinkedin.xlsx'
-df = pd.read_excel(excel_file)
+excel_file = 'NPLF LinkedIn Q1.xlsx'
+#df = pd.read_excel(excel_file)
+
+df = pd.read_excel('NPLF LinkedIn Q1.xlsx', sheet_name = [0,1,2,3,4])
+df3 = pd.read_excel('NPLF LinkedIn Q1.xlsx', sheet_name = 'Update metrics (aggregated)')
+df2 = pd.read_excel('NPLF LinkedIn Q1.xlsx', sheet_name = 'Industry')
+
 print(df)
 
-fig = make_subplots(rows=1, cols=2, column_widths=[0.5, 0.5])
-fig.add_trace(
-    go.Scatter(x=df['Date'] , y = df[ 'Impressions(organic)'], mode='lines+markers', line_color="#ef5a41"),
-    row=1, col=1
-)
+#fig = make_subplots(rows=2, cols=2, column_widths=[0.5, 0.5],
+#                    subplot_titles=("Engagements in April", "Engagements in May", "engagements in June",))
 
-fig.add_trace(
-    go.Scatter(x=df['Date'] , y = df[ 'Impressions(total)'], mode='lines+markers', line_color="#9467bd"),
-    row=1, col=2
-)
-fig.update_layout(
-autosize=False,
-    width=2000,
-    height=500,
-    margin=dict(
-        l=50,
-        r=50,
-        b=100,
-        t=100,
-        pad=20
-    ),
-    paper_bgcolor="LightSteelBlue",
-    title=go.layout.Title(
-        text="Facebook Page Quarter 2",
-        xref="paper",
-        x=0
-    ),
-    xaxis=go.layout.XAxis(
-        title=go.layout.xaxis.Title(
-            text="",
-            font=dict(
-                family="Comissioner, sans-serif",
-                size=18,
-                color="#7f7f7f"
-            )
-        )
-    ),
-    yaxis=go.layout.YAxis(
-        title=go.layout.yaxis.Title(
-            text="Date",
-            font=dict(
-                family="",
-                size=18,
-                color="#7f7f7f"
-            )
-        )
-    )
-)
+
+fig1 = px.bar(df2, y=df2.Industry, x=df2["Total views"], title = "Engagements in April")
+fig2 = px.bar(df3, y=df3.Date, x=df3["Impressions (total)"], title = "Likes in April")
+fig3 = px.bar(df3, y=df3.Date, x=df3["Reactions (total)"], title = "Likes in April")
+#fig4.show()
+#fig1 = go.Figure(data=[
+#    go.Bar(name='SF Zoo', x=animals, y=[20, 14, 23]),
+#    go.Bar(name='LA Zoo', x=animals, y=[12, 18, 29])
+#fig1.update_layout(uniformtext_minsize=12, uniformtext_mode='hide', barmode ='group', title_text= 'Indsutry')
+trace1 = fig1['data'][0]
+trace2 = fig2['data'][0]
+trace3 = fig3['data'][0]
+
+fig = make_subplots(rows=3, cols=1, shared_xaxes=False)
+fig.update_layout(height=3000, width=1200, title_text="Linkedin")
+fig.add_trace(trace1, row=1, col=1)
+fig.add_trace(trace2, row=2, col=1)
+fig.add_trace(trace3, row=3, col=1)
+
 fig.show()
 
 
 
-layout = plot.Layout(
-    title="Facebook"
-)
+
+#fig4 = px.bar(df2, x=df2.Date, y=df2.Impressions(total), title = "Likes in April")
+#fig4.show()
 
 
 
 
 
-app = dash.Dash(__name__)
-app.layout = html.Div([
-    html.Div([
-            html.H3('Facebook Page Quarter 2'),
-            dcc.Graph(
-                id='g7',
-                figure=data,
-        )], className="heading bottom"),
-
-    html.Div([
-        html.Div([
-            html.H3('Facebook Advertising'),
-            dcc.Graph(
-                id='g1',
-                figure=fig1)],
-        className="heading"),
-
-        html.Div([
-            html.H3('Facebook Reach'),
-            dcc.Graph(
-                id='g2', figure=fig2)],
-        className="heading"),
-    ],
-    className="row top"),
-
-    html.Div([
-        html.Div([
-            html.H3('Google Analytics'),
-            dcc.Graph(
-                id='g3',
-                figure=fig3)],
-        className="heading"),
-
-        html.Div([
-            html.H3('Twitter Reach'),
-            dcc.Graph(
-                id='g4',
-                figure=fig4)],
-                className="heading")],
-        className="row"),
-
-    html.Div([
-        html.Div([
-            html.H3('LinkedIn Reach'),
-            dcc.Graph(
-                id='g5',
-                figure=fig5)],
-        className="heading"),
-
-        html.Div([
-            html.H3('Email Marketing'),
-            dcc.Graph(
-                id='g6',
-                figure=fig6)],
-        className="heading")],
-    className="row"),
-
-    # html.Div([
-    #         html.H3('Summary'),
-    #         dcc.Graph(
-    #             id='g7',
-    #             figure=fig7,
-    #     )], className="heading bottom"),
-
-    html.Div([
-        html.H5('Source: Nashville Public Library Foundation Official Records')
-    ], className="source")
-],  className="container",)
-
-if __name__ == "__main__":
-    app.run_server(debug=True)
 
