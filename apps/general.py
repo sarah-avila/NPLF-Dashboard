@@ -76,8 +76,8 @@ badge = html.Div(
 # button group definitions
 vertical_navbar = dbc.ButtonGroup(
     [
-        dbc.Button("Overview"),
-        dbc.Button("Reach"),
+        dbc.Button("Overview", href="/apps/second"),
+        dbc.Button("Reach", href="/apps/second"),
         dbc.Button("Impressions"),
         dbc.Button("Visits"),
         dbc.Button("Leads"),
