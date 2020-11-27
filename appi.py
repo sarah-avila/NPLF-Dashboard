@@ -10,6 +10,9 @@ import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
 
+from app import app
+from app import server 
+
 df = pd.read_excel('Temporary Dataset -- VandyHacks Summer 2020.xlsx')
 
 layout = plot.Layout(
@@ -73,7 +76,7 @@ badge = html.Div(
 # button group definitions
 vertical_navbar = dbc.ButtonGroup(
     [
-        dbc.Button("Overview"),
+        dbc.Button("Overview", href="/apps/second"),
         dbc.Button("Reach"),
         dbc.Button("Impressions"),
         dbc.Button("Visits"),
