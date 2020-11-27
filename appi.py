@@ -20,8 +20,8 @@ app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     html.Div([
         dcc.Link('General', href='/apps/general'),
-        dcc.Link('Second Page', href='/apps/second'),
-        dcc.Link('Third Page', href='/apps/third'),
+        #dcc.Link('Second Page', href='/apps/second'),
+        #dcc.Link('Third Page', href='/apps/third'),
     ], className="row"),
     html.Div(id='page-content', children=[]),
 ])
