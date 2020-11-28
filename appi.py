@@ -36,5 +36,6 @@ def display_page(pathname):
     else:
         return general.app.layout
 
+
 if __name__ == '__main__':
     app.run_server(debug=True)

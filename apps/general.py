@@ -13,6 +13,7 @@ from dash.dependencies import Input, Output
 from app import app
 from app import server 
 
+
 df = pd.read_excel('Temporary Dataset -- VandyHacks Summer 2020.xlsx')
 
 layout = plot.Layout(
