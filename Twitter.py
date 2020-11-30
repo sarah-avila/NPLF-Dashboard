@@ -10,12 +10,15 @@ import plotly
 from plotly.subplots import make_subplots
 
 
-excel_file = 'NPLF Twitter Q1.xls'
+excel_file = 'NPLF Twitter Q1andQ2.xlsx'
 #df = pd.read_excel(excel_file)
-df = pd.read_excel('NPLF Twitter Q1.xls', sheet_name = [0,1,2])
-df2 = pd.read_excel('NPLF Twitter Q1.xls', sheet_name = 'NPLF Twitter April')
-df3 = pd.read_excel('NPLF Twitter Q1.xls', sheet_name = 'NPLF Twitter May')
-df4 = pd.read_excel('NPLF Twitter Q1.xls', sheet_name = 'NPLF Twitter June')
+df = pd.read_excel('NPLF Twitter Q1andQ2.xlsx', sheet_name = [0,1,2,3,4,5])
+df2 = pd.read_excel('NPLF Twitter Q1andQ2.xlsx', sheet_name = 'NPLF Twitter April')
+df3 = pd.read_excel('NPLF Twitter Q1andQ2.xlsx', sheet_name = 'NPLF Twitter May')
+df4 = pd.read_excel('NPLF Twitter Q1andQ2.xlsx', sheet_name = 'NPLF Twitter June')
+df5 = pd.read_excel('NPLF Twitter Q1andQ2.xlsx', sheet_name = 'NPLF Twitter July')
+df6 = pd.read_excel('NPLF Twitter Q1andQ2.xlsx', sheet_name = 'NPLF Twitter August')
+df7 = pd.read_excel('NPLF Twitter Q1andQ2.xlsx', sheet_name = 'NPLF Twitter September')
 print(df)
 
 #fig = make_subplots(rows=2, cols=2, column_widths=[0.5, 0.5],

@@ -15,9 +15,11 @@ excel_file = 'Facebook_Posts_Q2.xlsx'
 df = pd.read_excel(excel_file)
 print(df)
 
-fig = make_subplots(rows=3, cols=2, column_widths=[0.5, 0.5],
+fig = make_subplots(rows=5, cols=2, column_widths=[0.5, 0.5],
                     subplot_titles=("Weekly Total Impressions", "Lifetime Post Total Reach", "Lifetime Post Paid Reach",
-                                    "Lifetime Post Total Impressions","Lifetime Post Organic Impressions","Lifetime Post Paid Impressions"))
+                                    "Lifetime Post Total Impressions","Lifetime Post Organic Impressions","Lifetime Post Paid Impressions"
+                                    ,"Lifetime Engaged Users","Lifetime Matched Audience Targeting Consumptions on Post"
+                                    ,"Lifetime Post reach by people who like your Page","Lifetime Post Total Impressions"))
 
 
 
@@ -41,6 +43,23 @@ fig.add_trace(
     go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Post Paid Impressions'], mode='lines+markers', line_color="#ef5a41"),
     row=3, col=2
 )
+fig.add_trace(
+    go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Engaged Users'], mode='lines+markers', line_color="#9467bd"),
+    row=4, col=1
+)
+fig.add_trace(
+    go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Matched Audience Targeting Consumptions on Post'], mode='lines+markers', line_color="#9467bd"),
+    row=4, col=2
+)
+fig.add_trace(
+    go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Post reach by people who like your Page'], mode='lines+markers', line_color="#9467bd"),
+    row=5, col=1
+)
+fig.add_trace(
+    go.Scatter(x=df['Posted'] , y = df[ 'Lifetime Post Total Impressions'], mode='lines+markers', line_color="#9467bd"),
+    row=5, col=2
+)
+
 
 fig.update_layout(
 autosize=False,
@@ -93,7 +112,7 @@ autosize=False,
     ),
     paper_bgcolor="LightSteelBlue",
     title=go.layout.Title(
-        text="Facebook Page Quarter 1",
+        text="Facebook Page Quarter 2",
         xref="paper",
         x=0
     ),
