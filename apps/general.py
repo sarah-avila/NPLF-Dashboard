@@ -9,10 +9,7 @@ import plotly.graph_objects as plot
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
-from app import app
-from apps import general, second, third
 
-## INSERT CODE
 df = pd.read_excel('Temporary Dataset -- VandyHacks Summer 2020.xlsx')
 
 layout = plot.Layout(
@@ -76,8 +73,8 @@ badge = html.Div(
 # button group definitions
 vertical_navbar = dbc.ButtonGroup(
     [
-        dbc.Button("Overview", href='/apps/second'),
-        dbc.Button("Reach", href='/apps/third'),
+        dcc.Link("Overview", href="/second"),
+        dbc.Button("Reach", href="/third"),
         dbc.Button("Impressions"),
         dbc.Button("Visits"),
         dbc.Button("Leads"),
@@ -93,13 +90,25 @@ vertical_navbar = dbc.ButtonGroup(
 df['Date'] = pd.to_datetime(df.Date)
 dates = ['05-01-2020', '05-04-2020', '05-07-2020', '05-10-2020', '05-13-2020']
 date_mark = {i : dates[i] for i in range(0, 5)}
-###
 
+# horizontal_navbar = dbc.ButtonGroup(
+#     [
+#          dbc.DropdownMenu(
+#             [dbc.DropdownMenuItem("Weekly"), dbc.DropdownMenuItem("Monthly"), dbc.DropdownMenuItem("Quarterly")],
+#             label="Overview",
+#             group=True,
+#         ),
+#         dbc.Button("MoM"),
+#         dbc.Button("Summary"),
+        
+#     ],
+#     className="navbar-horizontal",
+# )
+
+# app and layout definition
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = html.Div([
-    dcc.Location(id='url', refresh=False),
-    html.Div(id='page-content'),
-        sticky_navbar,
+    sticky_navbar,
     badge,
     vertical_navbar,
     html.Div([
@@ -123,50 +132,62 @@ app.layout = html.Div([
                                     'fontSize' : '20px',
                                     'padding-left' : '360px',
                                     'display': 'inline-block'}),
-    ])
+
+
+        html.Div([
+            html.Div([
+                html.H3('Facebook Advertising'),
+                dcc.Graph(
+                    id='g1',
+                    figure=fig1)], 
+            className="heading"),
+
+            html.Div([
+                html.H3('Facebook Reach'),
+                dcc.Graph(
+                    id='g2', figure=fig2)], 
+            className="heading"),
+        ], 
+        className="row top"),
+
+        html.Div([
+            html.Div([
+                html.H3('Google Analytics'),
+                dcc.Graph(
+                    id='g3',
+                    figure=fig3)],
+            className="heading"),
+
+            html.Div([
+                html.H3('Twitter Reach'),
+                dcc.Graph(
+                    id='g4', 
+                    figure=fig4)], 
+                    className="heading")],
+            className="row"),
+
+        html.Div([
+            html.Div([
+                html.H3('LinkedIn Reach'),
+                dcc.Graph(
+                    id='g5',
+                    figure=fig5)],
+            className="heading"),
+
+            html.Div([
+                html.H3('Email Marketing'),
+                dcc.Graph(
+                    id='g6', 
+                    figure=fig6)], 
+            className="heading")],
+        className="row"),
+
+        html.Div([
+            html.H5('Source: Nashville Public Library Foundation Official Records')
+        ], className="source")
+    ], 
+    className="container"),
 ])
-
-# Step 5. Add callback functions
-@app.callback(Output('g7', 'figure'),
-             [Input('slider', 'value')])
-def update_figure(X):
-    df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
-    trace_1 = plot.Scatter(x = df2.Date, y = df2['Google Analytics'],
-                        name = 'Google Analytics',
-                        line = dict(width = 2,
-                                    color = '#00cc96'))
-    trace_2 = plot.Scatter(x = df2.Date, y = df2['Facebook Advertising'],
-                        name = 'Facebook Advertising',
-                        line = dict(width = 2,
-                                    color = '#FF5733'))
-    trace_3 = plot.Scatter(x = df2.Date, y = df2['Facebook Reach'],
-                        name = 'Facebook Reach',
-                        line = dict(width = 2,
-                                    color = '#D7BDE2'))
-    trace_4 = plot.Scatter(x = df2.Date, y = df2['Twitter Reach'],
-                        name = 'Twitter Reach',
-                        line = dict(width = 2,
-                                    color = '#9467bd'))
-    trace_5 = plot.Scatter(x = df2.Date, y = df2['LinkedIn Reach'],
-                        name = 'LinkedIn Reach',
-                        line = dict(width = 2,
-                                    color = '#ffa15a'))
-    trace_6 = plot.Scatter(x = df2.Date, y = df2['Email Marketing'],
-                        name = 'Email Marketing',
-                        line = dict(width = 2,
-                                    color = '#1cd3f3'))
-    fig = plot.Figure(data = [trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout = layout)
-    return fig
-
-@app.callback(Output('page-content', 'children'),
-              Input('url', 'pathname'))
-def display_page(pathname):
-    if pathname == '/apps/second':
-        return second.app.layout
-    elif pathname == '/apps/third':
-        return third.app.layout
-    else:
-        return general.app.layout
 
 if __name__ == '__main__':
     app.run_server(debug=True)
