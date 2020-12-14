@@ -5,6 +5,7 @@ from dash.dependencies import Input, Output, State
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
+import plotly.express as px
 import pandas as pd
 
 external_stylesheets = ['LinkedIn Q2.xlsx']
@@ -23,8 +24,17 @@ app.layout = html.Div([
             'borderWidth': '1px', 'borderStyle': 'dashed',
             'borderRadius': '5px', 'textAlign': 'center', 'margin': '10px'
         },
+
     ),
-    dash_table.DataTable(id='datatable-upload-container'),
+    dash_table.DataTable(id='datatable-upload-container',
+                         editable=True,
+                         filter_action="native",
+                         sort_action="native",
+                         sort_mode="multi",
+
+
+                         ),
+
     dcc.Graph(id='datatable-upload-graph')
 ])
 
