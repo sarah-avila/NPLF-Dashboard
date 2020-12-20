@@ -79,8 +79,10 @@ def display_graph(rows):
         'data': [{
             'x': df[df.columns[0]],
             'y': df[df.columns[1]],
-            'type': 'bar'
+            'type': 'bar',
+
         }]
+
     }
 
 
