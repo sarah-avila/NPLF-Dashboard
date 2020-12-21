@@ -50,8 +50,6 @@ min_value = '2020-01-01'
 max_value = '2020-12-01'
 dates = pd.date_range(min_value, max_value, freq='MS').strftime("%Y-%b").tolist()
 date_mark = {i: dates[i] for i in range(0, 12)}
-# dates = set_dates()
-
 
 # date slider labels
 def set_rangeslider(minValue, maxValue):
@@ -61,7 +59,7 @@ def set_rangeslider(minValue, maxValue):
     print(dates)
     date_mark = {i: dates[i] for i in range(0, 12)}
     print(date_mark)
-    return date_mark
+    return date_mark, dates
 
 # navbar definition
 sticky_navbar = dbc.NavbarSimple(
@@ -109,20 +107,6 @@ vertical_navbar = dbc.ButtonGroup(
     className="navbar-vertical",
 )
 
-# horizontal_navbar = dbc.ButtonGroup(
-#     [
-#          dbc.DropdownMenu(
-#             [dbc.DropdownMenuItem("Weekly"), dbc.DropdownMenuItem("Monthly"), dbc.DropdownMenuItem("Quarterly")],
-#             label="Overview",
-#             group=True,
-#         ),
-#         dbc.Button("MoM"),
-#         dbc.Button("Summary"),
-
-#     ],
-#     className="navbar-horizontal",
-# )
-
 # app and layout definition
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = html.Div([
@@ -137,33 +121,11 @@ app.layout = html.Div([
                 figure=fig7,
             )], className="heading"),
 
-        # # left input box
-        # html.Div([dcc.Input(
-        #     id='slider-min-value',
-        #     placeholder='Jan 1 2020')],
-        #     style={'width':'10%', 'float':'left', 'marginLeft': 20, 'marginRight': 20},
-        # ),
-        # # range slider
-        # html.Div([
-        #     html.Label("Time Period"),
-        #     dcc.RangeSlider(id='slider',
-        #                     marks=date_mark,
-        #                     min=0,
-        #                     max=11,
-        #                     value=[0, 11])
-        # ], className="rangeSlider"),
-        # # right input box
-        # html.Div([dcc.Input(
-        #     id='slider-max-value',
-        #     placeholder='Dec 31, 2020')],
-        #     style={'width':'10%', 'float':'left','marginLeft': 20, 'marginRight': 20},
-        # ),
-
         # range slider with input boxes
         html.Div([
             html.Label("Time Period"),
-            html.P(id="min-output"),
-            html.P(id="max-output"),
+            # html.P(id="min-output"),
+            # html.P(id="max-output"),
             html.P(id="not-used"),
         ], style={"font-size" : "20px", "margin-top" : "30px"}),
         html.Div(
@@ -237,24 +199,28 @@ app.layout = html.Div([
     ]),
 ])
 
-print("min_value", min_value)
-print("max_value", max_value)
-
-@app.callback(Output("not-used", "children"), [Input("min-input", "value"), Input("max-input", "value"), Input("generate-button", "n_clicks")])
-def on_button_click(minValue, maxValue, n):
+@app.callback(Output(component_id='slider', component_property='marks'), [Input('slider', 'value'), Input("generate-button", "n_clicks"), Input("min-input", "value"), Input("max-input", "value")])
+def on_button_click(X, n, minValue, maxValue):
     if n is not None:
-        print("date range from on_button_click", set_rangeslider(minValue, maxValue))
-        set_rangeslider(minValue, maxValue)
+        new_date_mark = set_rangeslider(minValue, maxValue)[0]
+        # NEED TO UPDATE GRAPH
+        #update_graph(X, n)
+        return new_date_mark
+    else: 
+        return date_mark
 
 
 # Step 5. Add callback functions
 @app.callback(Output('g7', 'figure'),[Input('slider', 'value'), Input("generate-button", "n_clicks")])
-def update_figure(X, n):
+def update_graph(X, n):
     print("X", X)
     print("n", n)
-    print("dates", dates)
+    minValue = min_value
+    maxValue = max_value
+    new_dates = set_rangeslider(minValue, maxValue)[1]
+    print(new_dates)
     if n is None or n > 0:
-        df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
+        df2 = df[(df.Date >= new_dates[X[0]]) & (df.Date <= new_dates[X[1]])]
         trace_1 = plot.Scatter(x=df2.Date, y=df2['impressions'],
                             name='impressions',
                             line=dict(width=2,
@@ -282,17 +248,19 @@ def update_figure(X, n):
         fig = plot.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=layout)
         return fig
 
-@app.callback(Output("min-output", "children"), [Input("min-input", "value")])
-def output_min_input(value):
-    min_value = value
-    print("mv", min_value)
-    return value
+# replace "not-used" with max-output and min-output      
 
-@app.callback(Output("max-output", "children"), [Input("max-input", "value")])
-def output_max_input(value):
-    max_value = value
-    print("MV", max_value)
-    return value
+# @app.callback(Output("not-used", "children"), [Input("min-input", "value")])
+# def output_min_input(value):
+#     min_value = value
+#     print("mv", min_value)
+#     return value
+
+# @app.callback(Output("not-used", "children"), [Input("max-input", "value")])
+# def output_max_input(value):
+#     max_value = value
+#     print("MV", max_value)
+#     return value
 
 if __name__ == '__main__':
     app.run_server(debug=True)
