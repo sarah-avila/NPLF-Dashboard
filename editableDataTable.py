@@ -10,38 +10,37 @@ import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 from dash.dependencies import Input, Output
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
-from app import app
-from app import server
 
 
-df = pd.read_excel('Temporary Dataset -- VandyHacks Summer 2020.xlsx')
+
+df = pd.read_excel('NPLF Twitter Q1andQ2.xlsx')
 
 layout = plot.Layout(
-    title="Facebook"
+    title="Twitter"
 )
 
-fig1 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Facebook Advertising'], mode='lines+markers', ))
-fig2 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Facebook Reach'], mode='lines+markers', line_color="#ef5a41"))
+fig1 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['impressions'], mode='lines+markers', ))
+fig2 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['engagement rate'], mode='lines+markers', line_color="#ef5a41"))
 fig3 = plot.Figure(
-    data=plot.Scatter(x=df['Date'], y=df['Google Analytics'], mode='lines+markers', line_color="#00cc96"))
-fig4 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Twitter Reach'], mode='lines+markers', line_color="#9467bd"))
-fig5 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['LinkedIn Reach'], mode='lines+markers', line_color="#ffa15a"))
-fig6 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['Email Marketing'], mode='lines+markers', line_color="#1cd3f3"))
+    data=plot.Scatter(x=df['Date'], y=df['detail expands'], mode='lines+markers', line_color="#00cc96"))
+fig4 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['likes'], mode='lines+markers', line_color="#9467bd"))
+fig5 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['media views'], mode='lines+markers', line_color="#ffa15a"))
+fig6 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['media engagements'], mode='lines+markers', line_color="#1cd3f3"))
 fig7 = plot.Figure()
 
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Facebook Advertising'],
+fig7.add_trace(plot.Scatter(x=df['Date'], y=df['impressions'],
                             mode='lines+markers',
-                            name='Facebook Advertising'))
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Facebook Reach'],
-                            mode='lines+markers', name='Facebook Reach'))
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Google Analytics'],
-                            mode='lines+markers', name='Google Analytics'))
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Twitter Reach'],
-                            mode='lines+markers', name='Twitter Reach'))
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['LinkedIn Reach'],
-                            mode='lines+markers', name='LinkedIn Reach'))
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['Email Marketing'],
-                            mode='lines+markers', name='Email Marketing'))
+                            name='impressions'))
+fig7.add_trace(plot.Scatter(x=df['Date'], y=df['engagement rate'],
+                            mode='lines+markers', name='engagement rate'))
+fig7.add_trace(plot.Scatter(x=df['Date'], y=df['detail expands'],
+                            mode='lines+markers', name='detail expands'))
+fig7.add_trace(plot.Scatter(x=df['Date'], y=df['likes'],
+                            mode='lines+markers', name='likes'))
+fig7.add_trace(plot.Scatter(x=df['Date'], y=df['media views'],
+                            mode='lines+markers', name='media views'))
+fig7.add_trace(plot.Scatter(x=df['Date'], y=df['media engagements'],
+                            mode='lines+markers', name='media engagements'))
 
 # navbar definition
 sticky_navbar = dbc.NavbarSimple(
@@ -91,8 +90,9 @@ vertical_navbar = dbc.ButtonGroup(
 
 # date slider labels
 df['Date'] = pd.to_datetime(df.Date)
-dates = ['05-01-2020', '05-04-2020', '05-07-2020', '05-10-2020', '05-13-2020']
-date_mark = {i: dates[i] for i in range(0, 5)}
+dates = ['01-01-2020', '02-1-2020', '03-01-2020', '04-01-2020', '05-01-2020','06-01-2020','07-01-2020','08-01-2020'
+         ,'09-01-2020','10-01-2020','11-01-2020','12-01-2020']
+date_mark = {i: dates[i] for i in range(0, 12)}
 
 # horizontal_navbar = dbc.ButtonGroup(
 #     [
@@ -116,7 +116,7 @@ app.layout = html.Div([
     vertical_navbar,
     html.Div([
         html.Div([
-            html.H3('Summary of May 1 - 13, 2020'),
+            html.H3('Summary of Jan 1 - Dec 2020'),
             dcc.Graph(
                 id='g7',
                 figure=fig7,
@@ -128,8 +128,8 @@ app.layout = html.Div([
             dcc.RangeSlider(id='slider',
                             marks=date_mark,
                             min=0,
-                            max=4,
-                            value=[0, 4])
+                            max=11,
+                            value=[0, 11])
         ], style={'width': '100%',
                   'fontSize': '20px',
                   'padding-left': '360px',
@@ -137,14 +137,14 @@ app.layout = html.Div([
 
         html.Div([
             html.Div([
-                html.H3('Facebook Advertising'),
+                html.H3('Twitter Impressions'),
                 dcc.Graph(
                     id='g1',
                     figure=fig1)],
                 className="heading"),
 
             html.Div([
-                html.H3('Facebook Reach'),
+                html.H3('Twitter engagement rate'),
                 dcc.Graph(
                     id='g2', figure=fig2)],
                 className="heading"),
@@ -153,14 +153,14 @@ app.layout = html.Div([
 
         html.Div([
             html.Div([
-                html.H3('Google Analytics'),
+                html.H3('detail expands'),
                 dcc.Graph(
                     id='g3',
                     figure=fig3)],
                 className="heading"),
 
             html.Div([
-                html.H3('Twitter Reach'),
+                html.H3('Twitter likes'),
                 dcc.Graph(
                     id='g4',
                     figure=fig4)],
@@ -169,14 +169,14 @@ app.layout = html.Div([
 
         html.Div([
             html.Div([
-                html.H3('LinkedIn Reach'),
+                html.H3('Twitter media views'),
                 dcc.Graph(
                     id='g5',
                     figure=fig5)],
                 className="heading"),
 
             html.Div([
-                html.H3('Email Marketing'),
+                html.H3('Twitter media engagement'),
                 dcc.Graph(
                     id='g6',
                     figure=fig6)],
@@ -196,28 +196,28 @@ app.layout = html.Div([
               [Input('slider', 'value')])
 def update_figure(X):
     df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
-    trace_1 = plot.Scatter(x=df2.Date, y=df2['Google Analytics'],
-                           name='Google Analytics',
+    trace_1 = plot.Scatter(x=df2.Date, y=df2['impressions'],
+                           name='impressions',
                            line=dict(width=2,
                                      color='#00cc96'))
-    trace_2 = plot.Scatter(x=df2.Date, y=df2['Facebook Advertising'],
-                           name='Facebook Advertising',
+    trace_2 = plot.Scatter(x=df2.Date, y=df2['engagement rate'],
+                           name='engagement rate',
                            line=dict(width=2,
                                      color='#FF5733'))
-    trace_3 = plot.Scatter(x=df2.Date, y=df2['Facebook Reach'],
-                           name='Facebook Reach',
+    trace_3 = plot.Scatter(x=df2.Date, y=df2['detail expands'],
+                           name='detail expands',
                            line=dict(width=2,
                                      color='#D7BDE2'))
-    trace_4 = plot.Scatter(x=df2.Date, y=df2['Twitter Reach'],
-                           name='Twitter Reach',
+    trace_4 = plot.Scatter(x=df2.Date, y=df2['likes'],
+                           name='likes',
                            line=dict(width=2,
                                      color='#9467bd'))
-    trace_5 = plot.Scatter(x=df2.Date, y=df2['LinkedIn Reach'],
-                           name='LinkedIn Reach',
+    trace_5 = plot.Scatter(x=df2.Date, y=df2['media views'],
+                           name='media views',
                            line=dict(width=2,
                                      color='#ffa15a'))
-    trace_6 = plot.Scatter(x=df2.Date, y=df2['Email Marketing'],
-                           name='Email Marketing',
+    trace_6 = plot.Scatter(x=df2.Date, y=df2['media engagements'],
+                           name='media engagements',
                            line=dict(width=2,
                                      color='#1cd3f3'))
     fig = plot.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=layout)
