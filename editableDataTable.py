@@ -43,9 +43,7 @@ fig7.add_trace(plot.Scatter(x=df['Date'], y=df['media views'],
 fig7.add_trace(plot.Scatter(x=df['Date'], y=df['media engagements'],
                             mode='lines+markers', name='media engagements'))
 
-# dates = ['01-01-2020', '02-1-2020', '03-01-2020', '04-01-2020', '05-01-2020','06-01-2020','07-01-2020','08-01-2020'
-#          ,'09-01-2020','10-01-2020','11-01-2020','12-01-2020']
-
+# default rangeslider/graph values
 min_value = '2020-01-01'
 max_value = '2020-12-01'
 dates = pd.date_range(min_value, max_value, freq='MS').strftime("%Y-%b").tolist()
@@ -56,9 +54,9 @@ def set_rangeslider(minValue, maxValue):
     print("enter set_rangeSlider", minValue, maxValue)
     df['Date'] = pd.to_datetime(df.Date)
     dates = pd.date_range(minValue, maxValue, freq='MS').strftime("%Y-%b").tolist()
-    print(dates)
+    # print(dates)
     date_mark = {i: dates[i] for i in range(0, 12)}
-    print(date_mark)
+    # print(date_mark)
     return date_mark, dates
 
 # navbar definition
@@ -187,25 +185,25 @@ app.layout = html.Div([
 @app.callback(Output(component_id='slider', component_property='marks'), [Input('slider', 'value'), Input("generate-button", "n_clicks"), Input("min-input", "value"), Input("max-input", "value")])
 def on_button_click(X, n, minValue, maxValue):
     if n is not None:
+        min_value = minValue
+        max_value = maxValue
         new_date_mark = set_rangeslider(minValue, maxValue)[0]
-        # NEED TO UPDATE GRAPH
-        #update_graph(X, n)
         return new_date_mark
     else: 
         return date_mark
 
 
 # Step 5. Add callback functions
-@app.callback(Output('g7', 'figure'),[Input('slider', 'value'), Input("generate-button", "n_clicks")])
-def update_graph(X, n):
-    print("X", X)
-    print("n", n)
-    minValue = min_value
-    maxValue = max_value
-    new_dates = set_rangeslider(minValue, maxValue)[1]
-    print(new_dates)
+@app.callback(Output('g7', 'figure'),[Input('slider', 'value'), Input("generate-button", "n_clicks"), Input('slider', 'marks')])
+def update_graph(X, n, dates):
+    print("X: ", X)
+    print("n: ", n)
+    print("dates: ", dates)
+    dates = list(dates.values())
+    print("dates as list", dates)
+
     if n is None or n > 0:
-        df2 = df[(df.Date >= new_dates[X[0]]) & (df.Date <= new_dates[X[1]])]
+        df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
         trace_1 = plot.Scatter(x=df2.Date, y=df2['impressions'],
                             name='impressions',
                             line=dict(width=2,
