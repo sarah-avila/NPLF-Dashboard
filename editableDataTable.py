@@ -184,17 +184,21 @@ app.layout = html.Div([
 
 @app.callback(Output(component_id='slider', component_property='marks'), [Input('slider', 'value'), Input("generate-button", "n_clicks"), Input("min-input", "value"), Input("max-input", "value")])
 def on_button_click(X, n, minValue, maxValue):
-    if n is not None:
+    global date_mark
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+
+    if 'generate-button' in changed_id:
         min_value = minValue
         max_value = maxValue
         new_date_mark = set_rangeslider(minValue, maxValue)[0]
+        date_mark = new_date_mark
         return new_date_mark
     else: 
         return date_mark
 
 
 # Step 5. Add callback functions
-@app.callback(Output('g7', 'figure'),[Input('slider', 'value'), Input("generate-button", "n_clicks"), Input('slider', 'marks')])
+@app.callback(Output('g7', 'figure'), [Input('slider', 'value'), Input("generate-button", "n_clicks"), Input('slider', 'marks')])
 def update_graph(X, n, dates):
     print("X: ", X)
     print("n: ", n)
@@ -202,48 +206,33 @@ def update_graph(X, n, dates):
     dates = list(dates.values())
     print("dates as list", dates)
 
-    if n is None or n > 0:
-        df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
-        trace_1 = plot.Scatter(x=df2.Date, y=df2['impressions'],
-                            name='impressions',
-                            line=dict(width=2,
-                                        color='#00cc96'))
-        trace_2 = plot.Scatter(x=df2.Date, y=df2['engagement rate'],
-                            name='engagement rate',
-                            line=dict(width=2,
-                                        color='#FF5733'))
-        trace_3 = plot.Scatter(x=df2.Date, y=df2['detail expands'],
-                            name='detail expands',
-                            line=dict(width=2,
-                                        color='#D7BDE2'))
-        trace_4 = plot.Scatter(x=df2.Date, y=df2['likes'],
-                            name='likes',
-                            line=dict(width=2,
-                                        color='#9467bd'))
-        trace_5 = plot.Scatter(x=df2.Date, y=df2['media views'],
-                            name='media views',
-                            line=dict(width=2,
-                                        color='#ffa15a'))
-        trace_6 = plot.Scatter(x=df2.Date, y=df2['media engagements'],
-                            name='media engagements',
-                            line=dict(width=2,
-                                        color='#1cd3f3'))
-        fig = plot.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=layout)
-        return fig
-
-# replace "not-used" with max-output and min-output      
-
-# @app.callback(Output("not-used", "children"), [Input("min-input", "value")])
-# def output_min_input(value):
-#     min_value = value
-#     print("mv", min_value)
-#     return value
-
-# @app.callback(Output("not-used", "children"), [Input("max-input", "value")])
-# def output_max_input(value):
-#     max_value = value
-#     print("MV", max_value)
-#     return value
+    df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
+    trace_1 = plot.Scatter(x=df2.Date, y=df2['impressions'],
+                        name='impressions',
+                        line=dict(width=2,
+                                    color='#00cc96'))
+    trace_2 = plot.Scatter(x=df2.Date, y=df2['engagement rate'],
+                        name='engagement rate',
+                        line=dict(width=2,
+                                    color='#FF5733'))
+    trace_3 = plot.Scatter(x=df2.Date, y=df2['detail expands'],
+                        name='detail expands',
+                        line=dict(width=2,
+                                    color='#D7BDE2'))
+    trace_4 = plot.Scatter(x=df2.Date, y=df2['likes'],
+                        name='likes',
+                        line=dict(width=2,
+                                    color='#9467bd'))
+    trace_5 = plot.Scatter(x=df2.Date, y=df2['media views'],
+                        name='media views',
+                        line=dict(width=2,
+                                    color='#ffa15a'))
+    trace_6 = plot.Scatter(x=df2.Date, y=df2['media engagements'],
+                        name='media engagements',
+                        line=dict(width=2,
+                                    color='#1cd3f3'))
+    fig = plot.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=layout)
+    return fig
 
 if __name__ == '__main__':
     app.run_server(debug=True)
