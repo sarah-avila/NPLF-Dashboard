@@ -107,13 +107,16 @@ app.layout = html.Div([
         # range slider with input boxes
         html.Div([
             html.Label("Time Period"),
-            # html.P(id="min-output"),
-            # html.P(id="max-output"),
-            html.P(id="not-used"),
-        ], style={"font-size" : "20px", "margin-top" : "30px"}),
+        ], style={"fontSize" : "20px", "marginTop" : "30px"}),
         html.Div(
         [
-            dcc.Input(id="min-input", type='text',  placeholder='2020-01-01', value=min_value),
+            # dcc.Input(id="min-input", type='text',  placeholder='2020-01-01', value=min_value),
+            dbc.FormGroup(
+            [
+                dbc.Label("Minimum Date"),
+                dbc.Input(id="min-input", placeholder=min_value, type="text", value=min_value),
+                # dbc.FormText("yyyy-mm-dd"),
+            ]),
             dcc.RangeSlider(
                 id='slider',
                 marks=date_mark,
@@ -122,11 +125,15 @@ app.layout = html.Div([
                 value=[0, 11],
                 allowCross=False
             ),
-            dcc.Input(id="max-input", type='text', placeholder='2020-12-01', value=max_value),
+             dbc.FormGroup(
+            [
+                dbc.Label("Maximum Date"),
+                dbc.Input(id="max-input", placeholder=max_value, type="text", value=max_value),
+                # dbc.FormText("yyyy-mm-dd"),
+            ]),
+            # dcc.Input(id="max-input", type='text', placeholder='2020-12-01', value=max_value),
             dbc.Button("Generate Graph", id="generate-button", className="mr-2")
-        ],
-            className="rangeSlider"
-        ),
+        ], className="rangeSlider"),
 
         html.Div([
             html.Div([
