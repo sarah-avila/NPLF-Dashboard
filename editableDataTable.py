@@ -63,21 +63,6 @@ def set_rangeslider(minValue, maxValue):
 
 # navbar definition
 sticky_navbar = dbc.NavbarSimple(
-    children=[
-        dbc.DropdownMenu(
-            children=[
-                dbc.DropdownMenuItem("Time Frame", header=True),
-                dbc.DropdownMenuItem("Weekly", href="#"),
-                dbc.DropdownMenuItem("Monthly", href="#"),
-                dbc.DropdownMenuItem("Quarterly", href="#"),
-            ],
-            nav=True,
-            in_navbar=True,
-            label="Overview",
-        ),
-        dbc.NavItem(dbc.NavLink("MoM", href="#")),
-        dbc.NavItem(dbc.NavLink("Summary", href="#")),
-    ],
     brand="Nashville Public Library Foundation",
     color="dark",
     dark=True,
