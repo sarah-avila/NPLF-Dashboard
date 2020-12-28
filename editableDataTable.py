@@ -20,12 +20,9 @@ fig7 = make_subplots(rows=1, cols=2)
 df = pd.read_excel('NPLF Twitter Q1andQ2.xlsx')
 df1 = pd.read_excel('Facebook Posts Q1andQ2.xlsx')
 
-layout = plot.Layout(
+layout = go.Layout(
     title="Twitter"
 )
-
-
-
 
 fig1 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['impressions'], mode='lines+markers', ))
 fig2 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['engagement rate'], mode='lines+markers', line_color="#ef5a41"))
@@ -58,12 +55,12 @@ trace5 = fig5['data'][0]
 trace6 = fig6['data'][0]
 trace7 = fig7['data'][0]
 
-fig7.show()
 
 #Facebook Posts
-layout = plot.Layout(
-    title="Facebook"
-)
+# layout = go.Layout(
+#     title="Facebook"
+# )
+
 fig1 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Reach'], mode='lines+markers', ))
 fig2 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Impressions'], mode='lines+markers', line_color="#ef5a41"))
 fig3 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Engaged Users'], mode='lines+markers',line_color="#00cc96" ))
@@ -87,7 +84,6 @@ fig8.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targ
 fig8.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targeting Consumptions on Post'],
                             mode='lines+markers',
                             name='Lifetime Matched Audience Targeting Consumptions on Post'))
-fig8.show()
 
 
 # default rangeslider/graph values
@@ -144,6 +140,7 @@ app.layout = html.Div([
     # badge,
     # vertical_navbar,
     html.Div([
+        # first graph -- Twitter
         html.Div([
             html.H3('Summary of Jan 1 - Dec 2020'),
             dcc.Graph(
@@ -157,7 +154,6 @@ app.layout = html.Div([
         ], style={"fontSize" : "20px", "marginTop" : "30px"}),
         html.Div(
         [
-            # dcc.Input(id="min-input", type='text',  placeholder='2020-01-01', value=min_value),
             dbc.FormGroup(
             [
                 dbc.Label("Minimum Date"),
@@ -178,57 +174,15 @@ app.layout = html.Div([
                 dbc.Input(id="max-input", placeholder=max_value, type="text", value=max_value),
                 # dbc.FormText("yyyy-mm-dd"),
             ]),
-            # dcc.Input(id="max-input", type='text', placeholder='2020-12-01', value=max_value),
             dbc.Button("Generate Graph", id="generate-button", className="mr-2")
         ], className="rangeSlider"),
 
-        html.Div([
-            html.Div([
-                html.H3('Twitter Impressions'),
-                dcc.Graph(
-                    id='g1',
-                    figure=fig1)],
-                className="heading"),
-
-            html.Div([
-                html.H3('Twitter engagement rate'),
-                dcc.Graph(
-                    id='g2', figure=fig2)],
-                className="heading"),
-        ],
-            className="row"),
-
-        html.Div([
-            html.Div([
-                html.H3('detail expands'),
-                dcc.Graph(
-                    id='g3',
-                    figure=fig3)],
-                className="heading"),
-
-            html.Div([
-                html.H3('Twitter likes'),
-                dcc.Graph(
-                    id='g4',
-                    figure=fig4)],
-                className="heading")],
-            className="row"),
-
-        html.Div([
-            html.Div([
-                html.H3('Twitter media views'),
-                dcc.Graph(
-                    id='g5',
-                    figure=fig5)],
-                className="heading"),
-
-            html.Div([
-                html.H3('Twitter media engagement'),
-                dcc.Graph(
-                    id='g6',
-                    figure=fig6)],
-                className="heading")],
-            className="row"),
+        # second graph -- Facebook
+         html.Div([
+            dcc.Graph(
+                id='g8',
+                figure=fig8,
+            )], className="heading"),
 
         html.Div([
             html.H5('Source: Nashville Public Library Foundation Official Records')
