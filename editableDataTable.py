@@ -3,22 +3,29 @@ import dash_html_components as html
 import dash_core_components as dcc
 import plotly.express as px
 import pandas as pd
+import plotly.graph_objects as go
 from pandas import ExcelWriter
 from pandas import ExcelFile
 import plotly.graph_objects as plot
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
+from plotly.subplots import make_subplots
+
 from dash.dependencies import Input, Output
 import numpy as np
 app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-
+fig7 = make_subplots(rows=1, cols=2)
 
 df = pd.read_excel('NPLF Twitter Q1andQ2.xlsx')
+df1 = pd.read_excel('Facebook Posts Q1andQ2.xlsx')
 
 layout = plot.Layout(
     title="Twitter"
 )
+
+
+
 
 fig1 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['impressions'], mode='lines+markers', ))
 fig2 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['engagement rate'], mode='lines+markers', line_color="#ef5a41"))
@@ -27,21 +34,61 @@ fig3 = plot.Figure(
 fig4 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['likes'], mode='lines+markers', line_color="#9467bd"))
 fig5 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['media views'], mode='lines+markers', line_color="#ffa15a"))
 fig6 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['media engagements'], mode='lines+markers', line_color="#1cd3f3"))
-fig7 = plot.Figure()
+fig7 = go.Figure()
 
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['impressions'],
+
+fig7.add_trace(go.Scatter(x=df['Date'], y=df['impressions'],
                             mode='lines+markers',
                             name='impressions'))
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['engagement rate'],
+fig7.add_trace(go.Scatter(x=df['Date'], y=df['engagement rate'],
                             mode='lines+markers', name='engagement rate'))
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['detail expands'],
+fig7.add_trace(go.Scatter(x=df['Date'], y=df['detail expands'],
                             mode='lines+markers', name='detail expands'))
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['likes'],
+fig7.add_trace(go.Scatter(x=df['Date'], y=df['likes'],
                             mode='lines+markers', name='likes'))
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['media views'],
+fig7.add_trace(go.Scatter(x=df['Date'], y=df['media views'],
                             mode='lines+markers', name='media views'))
-fig7.add_trace(plot.Scatter(x=df['Date'], y=df['media engagements'],
+fig7.add_trace(go.Scatter(x=df['Date'], y=df['media engagements'],
                             mode='lines+markers', name='media engagements'))
+trace1 = fig1['data'][0]
+trace2 = fig2['data'][0]
+trace3 = fig3['data'][0]
+trace4 = fig4['data'][0]
+trace5 = fig5['data'][0]
+trace6 = fig6['data'][0]
+trace7 = fig7['data'][0]
+
+fig7.show()
+
+#Facebook Posts
+layout = plot.Layout(
+    title="Facebook"
+)
+fig1 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Reach'], mode='lines+markers', ))
+fig2 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Impressions'], mode='lines+markers', line_color="#ef5a41"))
+fig3 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Engaged Users'], mode='lines+markers',line_color="#00cc96" ))
+fig4 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targeting Consumers on Post'], mode='lines+markers',line_color="#9467bd" ))
+fig5 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targeting Consumptions on Post'], mode='lines+markers', line_color="#ffa15a"))
+fig6 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Impressions by people who have liked your Page'], mode='lines+markers', line_color="#1cd3f3"))
+fig7 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post reach by people who like your Page'], mode='lines+markers',line_color="#1cd3f3" ))
+fig8 = go.Figure()
+fig8.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Reach'],
+                            mode='lines+markers',
+                            name='Lifetime Post Total Reach'))
+fig8.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Impressions'],
+                            mode='lines+markers',
+                            name='Lifetime Post Total Impressions'))
+fig8.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Engaged Users'],
+                            mode='lines+markers',
+                            name='Lifetime Engaged Users'))
+fig8.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targeting Consumers on Post'],
+                            mode='lines+markers',
+                            name='Lifetime Matched Audience Targeting Consumers on Post'))
+fig8.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targeting Consumptions on Post'],
+                            mode='lines+markers',
+                            name='Lifetime Matched Audience Targeting Consumptions on Post'))
+fig8.show()
+
 
 # default rangeslider/graph values
 min_value = '2020-01-01'
@@ -214,31 +261,31 @@ def update_graph(X, n, dates):
     print("dates as list", dates)
 
     df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
-    trace_1 = plot.Scatter(x=df2.Date, y=df2['impressions'],
+    trace_1 = go.Scatter(x=df2.Date, y=df2['impressions'],
                         name='impressions',
                         line=dict(width=2,
                                     color='#00cc96'))
-    trace_2 = plot.Scatter(x=df2.Date, y=df2['engagement rate'],
+    trace_2 = go.Scatter(x=df2.Date, y=df2['engagement rate'],
                         name='engagement rate',
                         line=dict(width=2,
                                     color='#FF5733'))
-    trace_3 = plot.Scatter(x=df2.Date, y=df2['detail expands'],
+    trace_3 = go.Scatter(x=df2.Date, y=df2['detail expands'],
                         name='detail expands',
                         line=dict(width=2,
                                     color='#D7BDE2'))
-    trace_4 = plot.Scatter(x=df2.Date, y=df2['likes'],
+    trace_4 = go.Scatter(x=df2.Date, y=df2['likes'],
                         name='likes',
                         line=dict(width=2,
                                     color='#9467bd'))
-    trace_5 = plot.Scatter(x=df2.Date, y=df2['media views'],
+    trace_5 = go.Scatter(x=df2.Date, y=df2['media views'],
                         name='media views',
                         line=dict(width=2,
                                     color='#ffa15a'))
-    trace_6 = plot.Scatter(x=df2.Date, y=df2['media engagements'],
+    trace_6 = go.Scatter(x=df2.Date, y=df2['media engagements'],
                         name='media engagements',
                         line=dict(width=2,
                                     color='#1cd3f3'))
-    fig = plot.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=layout)
+    fig = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=layout)
     return fig
 
 if __name__ == '__main__':
