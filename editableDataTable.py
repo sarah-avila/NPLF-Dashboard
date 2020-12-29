@@ -10,10 +10,21 @@ import plotly.graph_objects as plot
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 from plotly.subplots import make_subplots
+import dash_auth
 
 from dash.dependencies import Input, Output
 import numpy as np
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
+
+# Keep this out of source code repository - save in a file or a database
+VALID_USERNAME_PASSWORD_PAIRS = {
+    'NashvillePLFoundation@gmail.com': 'Foundation2018'
+}
+
+auth = dash_auth.BasicAuth(
+    app,
+    VALID_USERNAME_PASSWORD_PAIRS
+)
 
 fig7 = make_subplots(rows=1, cols=2)
 
@@ -134,7 +145,6 @@ vertical_navbar = dbc.ButtonGroup(
 )
 
 # app and layout definition
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 app.layout = html.Div([
     sticky_navbar,
     # badge,
