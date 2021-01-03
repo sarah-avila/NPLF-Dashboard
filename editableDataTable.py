@@ -158,7 +158,7 @@ app.layout = html.Div([
                 figure=fig7,
             )], className="heading"),
 
-        # range slider with input boxes
+        # first range slider with input boxes
         html.Div([
             html.Label("Time Period"),
         ], style={"fontSize" : "20px", "marginTop" : "30px"}),
@@ -167,11 +167,11 @@ app.layout = html.Div([
             dbc.FormGroup(
             [
                 dbc.Label("Minimum Date"),
-                dbc.Input(id="min-input", placeholder=min_value, type="text", value=min_value),
+                dbc.Input(id="min-input-one", placeholder=min_value, type="text", value=min_value),
                 # dbc.FormText("yyyy-mm-dd"),
             ]),
             dcc.RangeSlider(
-                id='slider',
+                id='slider-one',
                 marks=date_mark,
                 min=0,
                 max=11,
@@ -181,10 +181,10 @@ app.layout = html.Div([
              dbc.FormGroup(
             [
                 dbc.Label("Maximum Date"),
-                dbc.Input(id="max-input", placeholder=max_value, type="text", value=max_value),
+                dbc.Input(id="max-input-one", placeholder=max_value, type="text", value=max_value),
                 # dbc.FormText("yyyy-mm-dd"),
             ]),
-            dbc.Button("Generate Graph", id="generate-button", className="mr-2")
+            dbc.Button("Generate Graph", id="generate-button-one", className="mr-2")
         ], className="rangeSlider"),
 
         # second graph -- Facebook
@@ -194,18 +194,49 @@ app.layout = html.Div([
                 figure=fig8,
             )], className="heading"),
 
+        # second range slider with input boxes
+        html.Div([
+            html.Label("Time Period"),
+        ], style={"fontSize" : "20px", "marginTop" : "30px"}),
+        html.Div(
+        [
+            dbc.FormGroup(
+            [
+                dbc.Label("Minimum Date"),
+                dbc.Input(id="min-input-two", placeholder=min_value, type="text", value=min_value),
+                # dbc.FormText("yyyy-mm-dd"),
+            ]),
+            dcc.RangeSlider(
+                id='slider-two',
+                marks=date_mark,
+                min=0,
+                max=11,
+                value=[0, 11],
+                allowCross=False
+            ),
+             dbc.FormGroup(
+            [
+                dbc.Label("Maximum Date"),
+                dbc.Input(id="max-input-two", placeholder=max_value, type="text", value=max_value),
+                # dbc.FormText("yyyy-mm-dd"),
+            ]),
+            dbc.Button("Generate Graph", id="generate-button-two", className="mr-2")
+        ], className="rangeSlider"),
+
         html.Div([
             html.H5('Source: Nashville Public Library Foundation Official Records')
         ], className="source")
     ]),
 ])
 
-@app.callback(Output(component_id='slider', component_property='marks'), [Input('slider', 'value'), Input("generate-button", "n_clicks"), Input("min-input", "value"), Input("max-input", "value")])
+# first section -- Twitter ------------------------------------------------
+
+@app.callback(Output(component_id='slider-one', component_property='marks'), [Input('slider-one', 'value'), Input("generate-button-one", "n_clicks"), Input("min-input-one", "value"), Input("max-input-one", "value")])
 def on_button_click(X, n, minValue, maxValue):
     global date_mark
     changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 
-    if 'generate-button' in changed_id:
+    if 'generate-button-one' in changed_id:
         min_value = minValue
         max_value = maxValue
         new_date_mark = set_rangeslider(minValue, maxValue)[0]
@@ -215,14 +246,13 @@ def on_button_click(X, n, minValue, maxValue):
         return date_mark
 
 
-# Step 5. Add callback functions
-@app.callback(Output('g7', 'figure'), [Input('slider', 'value'), Input("generate-button", "n_clicks"), Input('slider', 'marks')])
+@app.callback(Output('g7', 'figure'), [Input('slider-one', 'value'), Input("generate-button-one", "n_clicks"), Input('slider-one', 'marks')])
 def update_graph(X, n, dates):
-    print("X: ", X)
-    print("n: ", n)
-    print("dates: ", dates)
+    # print("X: ", X)
+    # print("n: ", n)
+    # print("dates: ", dates)
     dates = list(dates.values())
-    print("dates as list", dates)
+    # print("dates as list", dates)
 
     df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
     trace_1 = go.Scatter(x=df2.Date, y=df2['impressions'],
@@ -249,8 +279,61 @@ def update_graph(X, n, dates):
                         name='media engagements',
                         line=dict(width=2,
                                     color='#1cd3f3'))
-    fig = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=layout)
-    return fig
+    fig1 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=layout)
+    return fig1
+
+# second section -- Facebook ------------------------------------------------
+
+@app.callback(Output(component_id='slider-two', component_property='marks'), [Input('slider-two', 'value'), Input("generate-button-two", "n_clicks"), Input("min-input-two", "value"), Input("max-input-two", "value")])
+def on_button_click_2(X, n, minValue, maxValue):
+    global date_mark
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+
+    if 'generate-button-one' in changed_id:
+        min_value = minValue
+        max_value = maxValue
+        new_date_mark = set_rangeslider(minValue, maxValue)[0]
+        date_mark = new_date_mark
+        return new_date_mark
+    else: 
+        return date_mark
+
+
+# @app.callback(Output('g8', 'figure'), [Input('slider-two', 'value'), Input("generate-button-two", "n_clicks"), Input('slider-two', 'marks')])
+# def update_graph_2(X, n, dates):
+#     print("X: ", X)
+#     print("n: ", n)
+#     print("dates: ", dates)
+#     dates = list(dates.values())
+#     print("dates as list", dates)
+
+#     df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
+#     trace_1 = go.Scatter(x=df2.Date, y=df2['impressions'],
+#                         name='impressions',
+#                         line=dict(width=2,
+#                                     color='#00cc96'))
+#     trace_2 = go.Scatter(x=df2.Date, y=df2['engagement rate'],
+#                         name='engagement rate',
+#                         line=dict(width=2,
+#                                     color='#FF5733'))
+#     trace_3 = go.Scatter(x=df2.Date, y=df2['detail expands'],
+#                         name='detail expands',
+#                         line=dict(width=2,
+#                                     color='#D7BDE2'))
+#     trace_4 = go.Scatter(x=df2.Date, y=df2['likes'],
+#                         name='likes',
+#                         line=dict(width=2,
+#                                     color='#9467bd'))
+#     trace_5 = go.Scatter(x=df2.Date, y=df2['media views'],
+#                         name='media views',
+#                         line=dict(width=2,
+#                                     color='#ffa15a'))
+#     trace_6 = go.Scatter(x=df2.Date, y=df2['media engagements'],
+#                         name='media engagements',
+#                         line=dict(width=2,
+#                                     color='#1cd3f3'))
+#     fig2 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=layout)
+#     return fig2
 
 if __name__ == '__main__':
     app.run_server(debug=True)
