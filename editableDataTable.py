@@ -30,7 +30,7 @@ fig7 = make_subplots(rows=1, cols=2)
 
 df = pd.read_excel('NPLF Twitter Q1andQ2.xlsx')
 df1 = pd.read_excel('Facebook Posts Q1andQ2.xlsx')
-
+df2 = pd.read_excel('NPLF LinkedIn Q1.xlsx')
 layout = go.Layout(
     title="Twitter"
 )
@@ -58,14 +58,6 @@ fig7.add_trace(go.Scatter(x=df['Date'], y=df['media views'],
                             mode='lines+markers', name='media views'))
 fig7.add_trace(go.Scatter(x=df['Date'], y=df['media engagements'],
                             mode='lines+markers', name='media engagements'))
-trace1 = fig1['data'][0]
-trace2 = fig2['data'][0]
-trace3 = fig3['data'][0]
-trace4 = fig4['data'][0]
-trace5 = fig5['data'][0]
-trace6 = fig6['data'][0]
-trace7 = fig7['data'][0]
-
 
 #Facebook Posts
 # layout = go.Layout(
@@ -95,7 +87,34 @@ fig8.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targ
 fig8.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targeting Consumptions on Post'],
                             mode='lines+markers',
                             name='Lifetime Matched Audience Targeting Consumptions on Post'))
+#Linkedin
+fig1 = plot.Figure(data=plot.Scatter(x=df2['Date'], y=df2['Impressions (organic)'], mode='lines+markers', ))
+fig2 = plot.Figure(data=plot.Scatter(x=df2['Date'], y=df2['Impressions (sponsored)'], mode='lines+markers', line_color="#ef5a41"))
+fig3 = plot.Figure(data=plot.Scatter(x=df2['Date'], y=df2['Unique impressions (organic)'], mode='lines+markers', line_color="#00cc96"))
+fig4 = plot.Figure(data=plot.Scatter(x=df2['Date'], y=df2['Clicks (organic)'], mode='lines+markers', line_color="#9467bd"))
+fig5 = plot.Figure(data=plot.Scatter(x=df2['Date'], y=df2['Clicks (sponsored)'], mode='lines+markers', line_color="#ffa15a"))
+fig6 = plot.Figure(data=plot.Scatter(x=df2['Date'], y=df2['Reactions (organic)'], mode='lines+markers', line_color="#1cd3f3"))
+fig7 = plot.Figure(data=plot.Scatter(x=df2['Date'], y=df2['Engagement rate (organic)'], mode='lines+markers', line_color="#F5A10E"))
+fig8 = plot.Figure(data=plot.Scatter(x=df2['Date'], y=df2['Engagement rate (sponsored)'], mode='lines+markers', line_color="#0EF596"))
+fig9 = go.Figure()
 
+fig9.add_trace(go.Scatter(x=df2['Date'], y=df2['Impressions (organic)'],
+                            mode='lines+markers',
+                            name= 'Impressions (organic)'))
+fig9.add_trace(go.Scatter(x=df2['Date'], y=df2['Impressions (sponsored)'],
+                            mode='lines+markers', name='Impressions (sponsored)'))
+fig9.add_trace(go.Scatter(x=df2['Date'], y=df2['Unique impressions (organic)'],
+                            mode='lines+markers', name='Unique impressions (organic)'))
+fig9.add_trace(go.Scatter(x=df2['Date'], y=df2['Clicks (organic)'],
+                            mode='lines+markers', name='Clicks (organic)'))
+fig9.add_trace(go.Scatter(x=df2['Date'], y=df2['Clicks (sponsored)'],
+                            mode='lines+markers', name='Clicks (sponsored)'))
+fig9.add_trace(go.Scatter(x=df2['Date'], y=df2['Reactions (organic)'],
+                            mode='lines+markers', name='Reactions (organic)'))
+fig9.add_trace(go.Scatter(x=df2['Date'], y=df2['Engagement rate (organic)'],
+                            mode='lines+markers', name='Engagement rate (organic)'))
+fig9.add_trace(go.Scatter(x=df2['Date'], y=df2['Engagement rate (sponsored)'],
+                            mode='lines+markers', name='Engagement rate (sponsored)'))
 
 # default rangeslider/graph values
 min_value = '2020-01-01'
@@ -112,6 +131,13 @@ def set_rangeslider(minValue, maxValue):
     date_mark = {i: dates[i] for i in range(0, 12)}
     # print(date_mark)
     return date_mark, dates
+# default rangeslider/graph values
+min_value = '2020-01-01'
+max_value = '2020-12-01'
+dates = pd.date_range(min_value, max_value, freq='MS').strftime("%Y-%b").tolist()
+date_mark = {i: dates[i] for i in range(0, 12)}
+
+
 
 # navbar definition
 sticky_navbar = dbc.NavbarSimple(
