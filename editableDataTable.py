@@ -27,8 +27,10 @@ auth = dash_auth.BasicAuth(
     VALID_USERNAME_PASSWORD_PAIRS
 )
 
+#layout = go.Layout()
+
 fig7 = make_subplots(rows=3, cols=1, subplot_titles=("Twitter", "Facebook", "Linkedin"))
-fig7.update_layout(height= 2500, width= 1700, title_text="Social Media Overview",)
+fig7.update_layout(height= 2300, width= 1300, title_text="Social Media Overview",)
 
 #Twitter
 df = pd.read_excel('NPLF Twitter Q1andQ2.xlsx')
@@ -111,7 +113,7 @@ fig6 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Reactions (organic)']
 fig8 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Engagement rate (organic)'], mode='lines+markers', line_color="#F5A10E"))
 fig9 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Engagement rate (sponsored)'], mode='lines+markers', line_color="#0EF596"))
 
-#fig9 = go.Figure()
+#Quarter 1 (april to june)
 
 fig7.add_trace(plot.Scatter(x=df4['Date'], y=df4['Impressions (organic)'],
                             mode='lines+markers',
@@ -130,8 +132,11 @@ fig7.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (organic)'],
                             mode='lines+markers', name='Engagement rate (organic)'), row = 3, col = 1)
 fig7.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (sponsored)'],
                             mode='lines+markers', name='Engagement rate (sponsored)'), row = 3, col = 1)
+                            
 
-fig7.show()
+
+
+#fig7.show()
 
 # default rangeslider/graph values
 min_value = '2020-01-01'
