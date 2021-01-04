@@ -31,7 +31,7 @@ fig7 = make_subplots(rows=3, cols=1, subplot_titles=("Twitter", "Facebook", "Lin
 fig7.update_layout(height= 2500, width= 1700, title_text="Social Media Overview",)
 
 #Twitter
-df = pd.read_excel('NPLF Twitter 2021.xlsx')
+df = pd.read_excel('NPLF Twitter 2022.xlsx')
 
 fig1 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['impressions'], mode='lines+markers', ))
 fig2 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['engagement rate'], mode='lines+markers', line_color="#ef5a41"))
@@ -68,7 +68,7 @@ fig7.add_trace(go.Scatter(trace6,
 # layout = go.Layout(
 #     title="Facebook"
 # )
-df1 = pd.read_excel('FacebookPosts2021.xlsx')
+df1 = pd.read_excel('FacebookPosts2022.xlsx')
 
 fig1 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Reach'], mode='lines+markers', ))
 fig2 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Impressions'], mode='lines+markers', line_color="#ef5a41"))
@@ -96,11 +96,11 @@ fig7.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targ
 
 #Linkedin
 #Data Frames and Sheet Names
-df2 = pd.read_excel('NPLF Linkedin 2021.xlsx', sheet_name = [0,1,2,3,4])
-df3 = pd.read_excel('NPLF Linkedin 2021.xlsx', sheet_name = 'Company size')
-df4 = pd.read_excel('NPLF Linkedin 2021.xlsx', sheet_name = 'Update metrics (aggregated)')
-df5 = pd.read_excel('NPLF Linkedin 2021.xlsx', sheet_name = 'Industry')
-df6 = pd.read_excel('NPLF Linkedin 2021.xlsx', sheet_name = 'Seniority')
+df2 = pd.read_excel('NPLF Linkedin 2022.xlsx', sheet_name = [0,1,2,3,4])
+df3 = pd.read_excel('NPLF Linkedin 2022.xlsx', sheet_name = 'Company size')
+df4 = pd.read_excel('NPLF Linkedin 2022.xlsx', sheet_name = 'Update metrics (aggregated)')
+df5 = pd.read_excel('NPLF Linkedin 2022.xlsx', sheet_name = 'Industry')
+df6 = pd.read_excel('NPLF Linkedin 2022.xlsx', sheet_name = 'Seniority')
 
 fig1 = plot.Figure(data=plot.Scatter(y=df4["Date"], x=df4["Impressions (organic)"], mode='lines+markers', ))
 fig2 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Impressions (sponsored)'], mode='lines+markers', line_color="#ef5a41"))
