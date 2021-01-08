@@ -19,13 +19,13 @@ df = pd.DataFrame({
 
 fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 
-app.layout = html.Div(children=[
-    html.H1(children='Second Dash'),
-
-    dcc.Graph(
-        id='example-graph',
-        figure=fig
-    )
+app.layout = html.Div([
+    html.Div([
+        html.H3('Second Dash'),
+        dcc.Graph(
+            id='second-graph',
+            figure=fig,
+    )], className="heading top"),
 ])
 
 if __name__ == '__main__':

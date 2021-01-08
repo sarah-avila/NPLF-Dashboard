@@ -47,10 +47,11 @@ sticky_navbar = dbc.NavbarSimple(
     children=[
         dbc.DropdownMenu(
             children=[
-                dbc.DropdownMenuItem("Time Frame", header=True),
-                dbc.DropdownMenuItem("Weekly", href="#"),
-                dbc.DropdownMenuItem("Monthly", href="#"),
-                dbc.DropdownMenuItem("Quarterly", href="#"),
+                dbc.DropdownMenuItem("Years", header=True),
+                dbc.DropdownMenuItem("First", href='/apps/general'),
+                dbc.DropdownMenuItem("Second", href='/apps/second'),
+                dbc.DropdownMenuItem("Third", href='/apps/third'),
+                dbc.DropdownMenuItem("Fourth", href="#"),
             ],
             nav=True,
             in_navbar=True,
@@ -95,35 +96,13 @@ dates = ['05-01-2020', '05-04-2020', '05-07-2020', '05-10-2020', '05-13-2020']
 date_mark = {i : dates[i] for i in range(0, 5)}
 ###
 
-app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
-    html.Div(id='page-content'),
-        sticky_navbar,
+    sticky_navbar,
     badge,
     vertical_navbar,
-    html.Div([
-        html.Div([
-                html.H3('Summary of May 1 - 13, 2020'),
-                dcc.Graph(
-                    id='g7',
-                    figure=fig7,
-            )], className="heading top"),
-
-
-        # range slider
-                html.P([
-                    html.Label("Time Period"),
-                    dcc.RangeSlider(id = 'slider',
-                                    marks = date_mark,
-                                    min = 0,
-                                    max = 4,
-                                    value = [0, 4]) 
-                        ], style = {'width' : '100%',
-                                    'fontSize' : '20px',
-                                    'padding-left' : '360px',
-                                    'display': 'inline-block'}),
-    ])
+    html.Div(id='page-content'),
 ])
 
 # Step 5. Add callback functions
@@ -159,8 +138,9 @@ def update_figure(X):
     return fig
 
 @app.callback(Output('page-content', 'children'),
-              Input('url', 'pathname'))
+              [Input('url', 'pathname')])
 def display_page(pathname):
+    print(pathname)
     if pathname == '/apps/second':
         return second.app.layout
     elif pathname == '/apps/third':
