@@ -4,9 +4,9 @@ import dash_core_components as dcc
 import plotly.express as px
 import pandas as pd
 import plotly.graph_objects as go
+import plotly.graph_objects as plot
 from pandas import ExcelWriter
 from pandas import ExcelFile
-import plotly.graph_objects as plot
 import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 from plotly.subplots import make_subplots
@@ -28,7 +28,10 @@ auth = dash_auth.BasicAuth(
     VALID_USERNAME_PASSWORD_PAIRS
 )
 
-#layout = go.Layout()
+# Twitter Layout
+twitterLayout = go.Layout(
+    title="Twitter"
+)
 
 fig7 = make_subplots(rows=3, cols=1, subplot_titles=("Twitter", "Facebook", "Linkedin"))
 fig7.update_layout(height= 2300, width= 1300, title_text="Social Media Overview",)
@@ -68,9 +71,9 @@ fig7.add_trace(go.Scatter(trace6,
 
 
 #Facebook Posts
-# layout = go.Layout(
-#     title="Facebook"
-# )
+facebookLayout = go.Layout(
+    title="Facebook"
+)
 df1 = pd.read_excel('Facebook Posts Q1andQ2.xlsx')
 
 fig1 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Reach'], mode='lines+markers', ))
@@ -98,6 +101,11 @@ fig7.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targ
                             name='Lifetime Matched Audience Targeting Consumptions on Post'), row = 2, col = 1)
 
 #Linkedin
+
+# LinkedIn Layout
+linkedinLayout = go.Layout(
+    title="LinkedIn"
+)
 #Data Frames and Sheet Names
 df2 = pd.read_excel('NPLF LinkedIn Q1.xlsx', sheet_name = [0,1,2,3,4])
 df3 = pd.read_excel('NPLF LinkedIn Q1.xlsx', sheet_name = 'Company size')
@@ -278,7 +286,7 @@ def update_graph(X, n, dates):
                         name='media engagements',
                         line=dict(width=2,
                                     color='#1cd3f3'))
-    fig1 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=layout)
+    fig1 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=twitterLayout)
     return fig1
 
 # second section -- Facebook ------------------------------------------------
@@ -298,7 +306,53 @@ def on_button_click_2(X, n, minValue, maxValue):
         return date_mark
 
 
-# @app.callback(Output('g8', 'figure'), [Input('slider-two', 'value'), Input("generate-button-two", "n_clicks"), Input('slider-two', 'marks')])
+@app.callback(Output('g9', 'figure'), [Input('slider-two', 'value'), Input("generate-button-two", "n_clicks"), Input('slider-two', 'marks')])
+def update_graph_2(X, n, dates):
+    print("X: ", X)
+    print("n: ", n)
+    print("dates: ", dates)
+    dates = list(dates.values())
+    print("dates as list", dates)
+
+    print("POSTED", df1.Posted)
+
+    df2 = df1[(df1.Posted >= dates[X[0]]) & (df1.Posted <= dates[X[1]])]
+    trace1 = go.Scatter(x=df2.Date, y=df2['Lifetime Post Total Reach'],
+                                mode='lines+markers',
+                                name='Lifetime Post Total Reach')
+    trace2 = go.Scatter(x=df2.Date, y=df2['Lifetime Post Total Impressions'],
+                                mode='lines+markers',
+                                name='Lifetime Post Total Impressions')
+    trace3 = go.Scatter(x=df2.Date, y=df2['Lifetime Engaged Users'],
+                                mode='lines+markers',
+                                name='Lifetime Engaged Users')
+    trace4 = go.Scatter(x=df2.Date, y=df2['Lifetime Matched Audience Targeting Consumers on Post'],
+                                mode='lines+markers',
+                                name='Lifetime Matched Audience Targeting Consumers on Post')
+    trace5 = go.Scatter(x=df2.Date, y=df2['Lifetime Matched Audience Targeting Consumptions on Post'],
+                                mode='lines+markers',
+                                name='Lifetime Matched Audience Targeting Consumptions on Post')
+    fig2 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5], layout=facebookLayout)
+    return fig2
+
+# third section -- LinkedIn ------------------------------------------------
+
+@app.callback(Output(component_id='slider-three', component_property='marks'), [Input('slider-three', 'value'), Input("generate-button-three", "n_clicks"), Input("min-input-three", "value"), Input("max-input-three", "value")])
+def on_button_click_2(X, n, minValue, maxValue):
+    global date_mark
+    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
+
+    if 'generate-button-three' in changed_id:
+        min_value = minValue
+        max_value = maxValue
+        new_date_mark = set_rangeslider(minValue, maxValue)[0]
+        date_mark = new_date_mark
+        return new_date_mark
+    else: 
+        return date_mark
+
+
+# @app.callback(Output('g10', 'figure'), [Input('slider-three', 'value'), Input("generate-button-three", "n_clicks"), Input('slider-three', 'marks')])
 # def update_graph_2(X, n, dates):
 #     print("X: ", X)
 #     print("n: ", n)
@@ -306,32 +360,29 @@ def on_button_click_2(X, n, minValue, maxValue):
 #     dates = list(dates.values())
 #     print("dates as list", dates)
 
-#     df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
-#     trace_1 = go.Scatter(x=df2.Date, y=df2['impressions'],
-#                         name='impressions',
-#                         line=dict(width=2,
-#                                     color='#00cc96'))
-#     trace_2 = go.Scatter(x=df2.Date, y=df2['engagement rate'],
-#                         name='engagement rate',
-#                         line=dict(width=2,
-#                                     color='#FF5733'))
-#     trace_3 = go.Scatter(x=df2.Date, y=df2['detail expands'],
-#                         name='detail expands',
-#                         line=dict(width=2,
-#                                     color='#D7BDE2'))
-#     trace_4 = go.Scatter(x=df2.Date, y=df2['likes'],
-#                         name='likes',
-#                         line=dict(width=2,
-#                                     color='#9467bd'))
-#     trace_5 = go.Scatter(x=df2.Date, y=df2['media views'],
-#                         name='media views',
-#                         line=dict(width=2,
-#                                     color='#ffa15a'))
-#     trace_6 = go.Scatter(x=df2.Date, y=df2['media engagements'],
-#                         name='media engagements',
-#                         line=dict(width=2,
-#                                     color='#1cd3f3'))
-#     fig2 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=layout)
+#     print("LinkedIn Dates", df4.Date)
+
+#     new_data = df4[(df4.Date >= dates[X[0]]) & (df4.Date <= dates[X[1]])]
+#     print("NEW DATA", new_data)
+#     print("hello")
+#     trace_1 = plot.Scatter(x=new_data.Date, y=df4['Impressions (organic)'],
+#                                 mode='lines+markers',
+#                                 name= 'Impressions (organic)')
+#     trace_2 = plot.Scatter(x=new_data.Date, y=df4['Impressions (sponsored)'],
+#                                 mode='lines+markers', name='Impressions (sponsored)')
+#     trace_3 = plot.Scatter(x=new_data.Date, y=df4['Unique impressions (organic)'],
+#                                 mode='lines+markers', name='Unique impressions (organic)')
+#     trace_4 = plot.Scatter(x=new_data.Date, y=df4['Clicks (organic)'],
+#                                 mode='lines+markers', name='Clicks (organic)')
+#     trace_5 = plot.Scatter(x=new_data.Date, y=df4['Clicks (sponsored)'],
+#                                 mode='lines+markers', name='Clicks (sponsored)')
+#     trace_6 = plot.Scatter(x=new_data.Date, y=df4['Reactions (organic)'],
+#                                 mode='lines+markers', name='Reactions (organic)')
+#     trace_7 = plot.Scatter(x=new_data.Date, y=df4['Engagement rate (organic)'],
+#                                 mode='lines+markers', name='Engagement rate (organic)')
+#     trace_8 = plot.Scatter(x=new_data.Date, y=df4['Engagement rate (sponsored)'],
+#                                 mode='lines+markers', name='Engagement rate (sponsored)')
+#     fig2 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6, trace_7, trace_8], layout=linkedinLayout)
 #     return fig2
 
 if __name__ == '__main__':
