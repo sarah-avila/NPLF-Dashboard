@@ -75,27 +75,27 @@ fig7.add_trace(go.Scatter(trace6,
 
 df1 = pd.read_excel('Facebook Posts Q1andQ2.xlsx')
 
-fig1 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Reach'], mode='lines+markers', ))
-fig2 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Impressions'], mode='lines+markers', line_color="#ef5a41"))
-fig3 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Engaged Users'], mode='lines+markers',line_color="#00cc96" ))
-fig4 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targeting Consumers on Post'], mode='lines+markers',line_color="#9467bd" ))
-fig5 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targeting Consumptions on Post'], mode='lines+markers', line_color="#ffa15a"))
-fig6 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Impressions by people who have liked your Page'], mode='lines+markers', line_color="#1cd3f3"))
-fig8 = go.Figure(data=go.Scatter(x=df1['Posted'], y=df1['Lifetime Post reach by people who like your Page'], mode='lines+markers',line_color="#1cd3f3" ))
+fig1 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Post Total Reach'], mode='lines+markers', ))
+fig2 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Post Total Impressions'], mode='lines+markers', line_color="#ef5a41"))
+fig3 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Engaged Users'], mode='lines+markers',line_color="#00cc96" ))
+fig4 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience Targeting Consumers on Post'], mode='lines+markers',line_color="#9467bd" ))
+fig5 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience Targeting Consumptions on Post'], mode='lines+markers', line_color="#ffa15a"))
+fig6 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Post Impressions by people who have liked your Page'], mode='lines+markers', line_color="#1cd3f3"))
+fig8 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Post reach by people who like your Page'], mode='lines+markers',line_color="#1cd3f3" ))
 fig9 = go.Figure()
-fig9.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Reach'],
+fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Post Total Reach'],
                             mode='lines+markers',
                             name='Lifetime Post Total Reach'))
-fig9.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Post Total Impressions'],
+fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Post Total Impressions'],
                             mode='lines+markers',
                             name='Lifetime Post Total Impressions'))
-fig9.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Engaged Users'],
+fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Engaged Users'],
                             mode='lines+markers',
                             name='Lifetime Engaged Users'))
-fig9.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targeting Consumers on Post'],
+fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience Targeting Consumers on Post'],
                             mode='lines+markers',
                             name='Lifetime Matched Audience Targeting Consumers on Post'))
-fig9.add_trace(go.Scatter(x=df1['Posted'], y=df1['Lifetime Matched Audience Targeting Consumptions on Post'],
+fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience Targeting Consumptions on Post'],
                             mode='lines+markers',
                             name='Lifetime Matched Audience Targeting Consumptions on Post'))
 
