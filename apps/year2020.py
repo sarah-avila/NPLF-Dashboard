@@ -225,12 +225,6 @@ app.layout = html.Div([
         ], style={"fontSize" : "20px", "marginTop" : "30px"}),
         html.Div(
         [
-            dbc.FormGroup(
-            [
-                dbc.Label("Minimum Date"),
-                dbc.Input(id="min-input-one", placeholder=min_value, type="text", value=min_value),
-                # dbc.FormText("yyyy-mm-dd"),
-            ]),
             dcc.RangeSlider(
                 id='slider-one',
                 marks=date_mark,
@@ -239,13 +233,6 @@ app.layout = html.Div([
                 value=[0, 11],
                 allowCross=False
             ),
-             dbc.FormGroup(
-            [
-                dbc.Label("Maximum Date"),
-                dbc.Input(id="max-input-one", placeholder=max_value, type="text", value=max_value),
-                # dbc.FormText("yyyy-mm-dd"),
-            ]),
-            dbc.Button("Generate Graph", id="generate-button-one", className="mr-2")
         ], className="rangeSlider"),
 
         # second graph -- Facebook
@@ -261,12 +248,6 @@ app.layout = html.Div([
         ], style={"fontSize" : "20px", "marginTop" : "30px"}),
         html.Div(
         [
-            dbc.FormGroup(
-            [
-                dbc.Label("Minimum Date"),
-                dbc.Input(id="min-input-two", placeholder=min_value, type="text", value=min_value),
-                # dbc.FormText("yyyy-mm-dd"),
-            ]),
             dcc.RangeSlider(
                 id='slider-two',
                 marks=date_mark,
@@ -275,13 +256,6 @@ app.layout = html.Div([
                 value=[0, 11],
                 allowCross=False
             ),
-             dbc.FormGroup(
-            [
-                dbc.Label("Maximum Date"),
-                dbc.Input(id="max-input-two", placeholder=max_value, type="text", value=max_value),
-                # dbc.FormText("yyyy-mm-dd"),
-            ]),
-            dbc.Button("Generate Graph", id="generate-button-two", className="mr-2")
         ], className="rangeSlider"),
 
         # third graph -- LinkedIn
@@ -296,12 +270,6 @@ app.layout = html.Div([
         ], style={"fontSize" : "20px", "marginTop" : "30px"}),
         html.Div(
         [
-            dbc.FormGroup(
-            [
-                dbc.Label("Minimum Date"),
-                dbc.Input(id="min-input-three", placeholder=min_value, type="text", value=min_value),
-                # dbc.FormText("yyyy-mm-dd"),
-            ]),
             dcc.RangeSlider(
                 id='slider-three',
                 marks=date_mark,
@@ -310,13 +278,6 @@ app.layout = html.Div([
                 value=[0, 11],
                 allowCross=False
             ),
-             dbc.FormGroup(
-            [
-                dbc.Label("Maximum Date"),
-                dbc.Input(id="max-input-three", placeholder=max_value, type="text", value=max_value),
-                # dbc.FormText("yyyy-mm-dd"),
-            ]),
-            dbc.Button("Generate Graph", id="generate-button-three", className="mr-2")
         ], className="rangeSlider"),
 
         html.Div([

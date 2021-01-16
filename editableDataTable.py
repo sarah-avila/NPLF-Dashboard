@@ -238,25 +238,10 @@ def display_page(pathname):
 
 # first section -- Twitter ------------------------------------------------
 
-@app.callback(Output(component_id='slider-one', component_property='marks'), [Input('slider-one', 'value'), Input("generate-button-one", "n_clicks"), Input("min-input-one", "value"), Input("max-input-one", "value")])
-def on_button_click(X, n, minValue, maxValue):
-    global date_mark
-    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 
-    if 'generate-button-one' in changed_id:
-        min_value = minValue
-        max_value = maxValue
-        new_date_mark = set_rangeslider(minValue, maxValue)[0]
-        date_mark = new_date_mark
-        return new_date_mark
-    else: 
-        return date_mark
-
-
-@app.callback(Output('g7', 'figure'), [Input('slider-one', 'value'), Input("generate-button-one", "n_clicks"), Input('slider-one', 'marks')])
-def update_graph(X, n, dates):
+@app.callback(Output('g7', 'figure'), [Input('slider-one', 'value'), Input('slider-one', 'marks')])
+def update_graph(X, dates):
     # print("X: ", X)
-    # print("n: ", n)
     # print("dates: ", dates)
     dates = list(dates.values())
     # print("dates as list", dates)
@@ -291,45 +276,28 @@ def update_graph(X, n, dates):
 
 # second section -- Facebook ------------------------------------------------
 
-@app.callback(Output(component_id='slider-two', component_property='marks'), [Input('slider-two', 'value'), Input("generate-button-two", "n_clicks"), Input("min-input-two", "value"), Input("max-input-two", "value")])
-def on_button_click_2(X, n, minValue, maxValue):
-    global date_mark
-    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 
-    if 'generate-button-one' in changed_id:
-        min_value = minValue
-        max_value = maxValue
-        new_date_mark = set_rangeslider(minValue, maxValue)[0]
-        date_mark = new_date_mark
-        return new_date_mark
-    else: 
-        return date_mark
-
-
-@app.callback(Output('g9', 'figure'), [Input('slider-two', 'value'), Input("generate-button-two", "n_clicks"), Input('slider-two', 'marks')])
-def update_graph_2(X, n, dates):
+@app.callback(Output('g9', 'figure'), [Input('slider-two', 'value'), Input('slider-two', 'marks')])
+def update_graph_2(X, dates):
     print("X: ", X)
-    print("n: ", n)
     print("dates: ", dates)
     dates = list(dates.values())
     print("dates as list", dates)
 
-    print("POSTED", df1.Posted)
-
-    df2 = df1[(df1.Posted >= dates[X[0]]) & (df1.Posted <= dates[X[1]])]
-    trace1 = go.Scatter(x=df2.Date, y=df2['Lifetime Post Total Reach'],
+    df2 = df1[(df1.Date >= dates[X[0]]) & (df1.Date <= dates[X[1]])]
+    trace_1 = go.Scatter(x=df2.Date, y=df2['Lifetime Post Total Reach'],
                                 mode='lines+markers',
                                 name='Lifetime Post Total Reach')
-    trace2 = go.Scatter(x=df2.Date, y=df2['Lifetime Post Total Impressions'],
+    trace_2 = go.Scatter(x=df2.Date, y=df2['Lifetime Post Total Impressions'],
                                 mode='lines+markers',
                                 name='Lifetime Post Total Impressions')
-    trace3 = go.Scatter(x=df2.Date, y=df2['Lifetime Engaged Users'],
+    trace_3 = go.Scatter(x=df2.Date, y=df2['Lifetime Engaged Users'],
                                 mode='lines+markers',
                                 name='Lifetime Engaged Users')
-    trace4 = go.Scatter(x=df2.Date, y=df2['Lifetime Matched Audience Targeting Consumers on Post'],
+    trace_4 = go.Scatter(x=df2.Date, y=df2['Lifetime Matched Audience Targeting Consumers on Post'],
                                 mode='lines+markers',
                                 name='Lifetime Matched Audience Targeting Consumers on Post')
-    trace5 = go.Scatter(x=df2.Date, y=df2['Lifetime Matched Audience Targeting Consumptions on Post'],
+    trace_5 = go.Scatter(x=df2.Date, y=df2['Lifetime Matched Audience Targeting Consumptions on Post'],
                                 mode='lines+markers',
                                 name='Lifetime Matched Audience Targeting Consumptions on Post')
     fig2 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5], layout=facebookLayout)
@@ -337,53 +305,39 @@ def update_graph_2(X, n, dates):
 
 # third section -- LinkedIn ------------------------------------------------
 
-@app.callback(Output(component_id='slider-three', component_property='marks'), [Input('slider-three', 'value'), Input("generate-button-three", "n_clicks"), Input("min-input-three", "value"), Input("max-input-three", "value")])
-def on_button_click_2(X, n, minValue, maxValue):
-    global date_mark
-    changed_id = [p['prop_id'] for p in dash.callback_context.triggered][0]
 
-    if 'generate-button-three' in changed_id:
-        min_value = minValue
-        max_value = maxValue
-        new_date_mark = set_rangeslider(minValue, maxValue)[0]
-        date_mark = new_date_mark
-        return new_date_mark
-    else: 
-        return date_mark
+@app.callback(Output('g10', 'figure'), [Input('slider-three', 'value'), Input('slider-three', 'marks')])
+def update_graph_3(X, dates):
+    print("X: ", X)
+    print("dates: ", dates)
+    dates = list(dates.values())
+    print("dates as list", dates)
 
+    print("LinkedIn Dates", df4.Date)
 
-# @app.callback(Output('g10', 'figure'), [Input('slider-three', 'value'), Input("generate-button-three", "n_clicks"), Input('slider-three', 'marks')])
-# def update_graph_2(X, n, dates):
-#     print("X: ", X)
-#     print("n: ", n)
-#     print("dates: ", dates)
-#     dates = list(dates.values())
-#     print("dates as list", dates)
-
-#     print("LinkedIn Dates", df4.Date)
-
-#     new_data = df4[(df4.Date >= dates[X[0]]) & (df4.Date <= dates[X[1]])]
-#     print("NEW DATA", new_data)
-#     print("hello")
-#     trace_1 = plot.Scatter(x=new_data.Date, y=df4['Impressions (organic)'],
-#                                 mode='lines+markers',
-#                                 name= 'Impressions (organic)')
-#     trace_2 = plot.Scatter(x=new_data.Date, y=df4['Impressions (sponsored)'],
-#                                 mode='lines+markers', name='Impressions (sponsored)')
-#     trace_3 = plot.Scatter(x=new_data.Date, y=df4['Unique impressions (organic)'],
-#                                 mode='lines+markers', name='Unique impressions (organic)')
-#     trace_4 = plot.Scatter(x=new_data.Date, y=df4['Clicks (organic)'],
-#                                 mode='lines+markers', name='Clicks (organic)')
-#     trace_5 = plot.Scatter(x=new_data.Date, y=df4['Clicks (sponsored)'],
-#                                 mode='lines+markers', name='Clicks (sponsored)')
-#     trace_6 = plot.Scatter(x=new_data.Date, y=df4['Reactions (organic)'],
-#                                 mode='lines+markers', name='Reactions (organic)')
-#     trace_7 = plot.Scatter(x=new_data.Date, y=df4['Engagement rate (organic)'],
-#                                 mode='lines+markers', name='Engagement rate (organic)')
-#     trace_8 = plot.Scatter(x=new_data.Date, y=df4['Engagement rate (sponsored)'],
-#                                 mode='lines+markers', name='Engagement rate (sponsored)')
-#     fig2 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6, trace_7, trace_8], layout=linkedinLayout)
-#     return fig2
+    new_data = df4[(df4.Date >= dates[X[0]]) & (df4.Date <= dates[X[1]])]
+    print(dates[X[0]], dates[X[1]])
+    print("NEW DATA", new_data)
+    print("hello")
+    trace_1 = plot.Scatter(x=new_data.Date, y=df4['Impressions (organic)'],
+                                mode='lines+markers',
+                                name= 'Impressions (organic)')
+    trace_2 = plot.Scatter(x=new_data.Date, y=df4['Impressions (sponsored)'],
+                                mode='lines+markers', name='Impressions (sponsored)')
+    trace_3 = plot.Scatter(x=new_data.Date, y=df4['Unique impressions (organic)'],
+                                mode='lines+markers', name='Unique impressions (organic)')
+    trace_4 = plot.Scatter(x=new_data.Date, y=df4['Clicks (organic)'],
+                                mode='lines+markers', name='Clicks (organic)')
+    trace_5 = plot.Scatter(x=new_data.Date, y=df4['Clicks (sponsored)'],
+                                mode='lines+markers', name='Clicks (sponsored)')
+    trace_6 = plot.Scatter(x=new_data.Date, y=df4['Reactions (organic)'],
+                                mode='lines+markers', name='Reactions (organic)')
+    trace_7 = plot.Scatter(x=new_data.Date, y=df4['Engagement rate (organic)'],
+                                mode='lines+markers', name='Engagement rate (organic)')
+    trace_8 = plot.Scatter(x=new_data.Date, y=df4['Engagement rate (sponsored)'],
+                                mode='lines+markers', name='Engagement rate (sponsored)')
+    fig2 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6, trace_7, trace_8], layout=linkedinLayout)
+    return fig2
 
 if __name__ == '__main__':
     app.run_server(debug=True)

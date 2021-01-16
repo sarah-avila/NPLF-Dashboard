@@ -131,7 +131,7 @@ fig7.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (organic)'],
 fig7.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (sponsored)'],
                             mode='lines+markers', name='Engagement rate (sponsored)'), row = 3, col = 1)
 
-fig7.show()
+#fig7.show()
 
 # default rangeslider/graph values
 min_value = '2020-01-01'
