@@ -12,7 +12,6 @@ import dash_core_components as dcc
 from plotly.subplots import make_subplots
 import plotly
 import dash_auth
-
 from dash.dependencies import Input, Output
 import numpy as np
 
@@ -152,7 +151,7 @@ app.layout = html.Div([
                 figure=fig7,
             )], className="heading"),
 
-        # first range slider with input boxes
+        # first range slider
         html.Div([
             html.Label("Time Period"),
         ], style={"fontSize" : "20px", "marginTop" : "30px"}),
@@ -175,7 +174,7 @@ app.layout = html.Div([
                 figure=fig9,
             )], className="heading"),
 
-        # second range slider with input boxes
+        # second range slider
         html.Div([
             html.Label("Time Period"),
         ], style={"fontSize" : "20px", "marginTop" : "30px"}),
@@ -197,7 +196,7 @@ app.layout = html.Div([
                 id='g10',
                 figure=fig10,
             )], className="heading"),
-        # third range slider with input boxes
+        # third range slider
         html.Div([
             html.Label("Time Period"),
         ], style={"fontSize" : "20px", "marginTop" : "30px"}),
