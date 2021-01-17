@@ -15,25 +15,11 @@ import dash_auth
 
 from dash.dependencies import Input, Output
 import numpy as np
+
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-# Keep this out of source code repository - save in a file or a database
-VALID_USERNAME_PASSWORD_PAIRS = {
-    'NashvillePLFoundation@gmail.com': 'Foundation2018'
-}
+# Twitter graph ------------------------------------------------
 
-auth = dash_auth.BasicAuth(
-    app,
-    VALID_USERNAME_PASSWORD_PAIRS
-)
-
-#layout = go.Layout()
-
-fig7 = make_subplots()
-# fig7 = make_subplots(rows=3, cols=1, subplot_titles=("Twitter", "Facebook", "Linkedin"))
-# fig7.update_layout(height= 2300, width= 1300, title_text="Social Media Overview",)
-
-#Twitter
 df = pd.read_excel('NPLF Twitter Q1andQ2.xlsx')
 
 fig1 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['impressions'], mode='lines+markers', ))
@@ -44,7 +30,7 @@ fig4 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['likes'], mode='lines+ma
 fig5 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['media views'], mode='lines+markers', line_color="#ffa15a"))
 fig6 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['media engagements'], mode='lines+markers', line_color="#1cd3f3"))
 fig7 = go.Figure()
-
+fig7.update_layout(width=995, height= 500)
 
 trace1 = fig1['data'][0]
 trace2 = fig2['data'][0]
@@ -55,7 +41,7 @@ trace6 = fig6['data'][0]
 
 fig7.add_trace(go.Scatter(trace1,
                             mode='lines+markers',
-                            name='impressions'))
+                            name='Impressions'))
 fig7.add_trace(go.Scatter(trace2,
                             mode='lines+markers', name='Engagement rate'))
 fig7.add_trace(go.Scatter(trace3,
@@ -67,11 +53,7 @@ fig7.add_trace(go.Scatter(trace5,
 fig7.add_trace(go.Scatter(trace6,
                             mode='lines+markers', name='Media Engagements'))
 
-
-#Facebook Posts
-# layout = go.Layout(
-#     title="Facebook"
-# )
+# Facebook graph ------------------------------------------------
 
 df1 = pd.read_excel('Facebook Posts Q1andQ2.xlsx')
 
@@ -83,6 +65,7 @@ fig5 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience
 fig6 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Post Impressions by people who have liked your Page'], mode='lines+markers', line_color="#1cd3f3"))
 fig8 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Post reach by people who like your Page'], mode='lines+markers',line_color="#1cd3f3" ))
 fig9 = go.Figure()
+fig9.update_layout(width=995, height= 500)
 fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Post Total Reach'],
                             mode='lines+markers',
                             name='Lifetime Post Total Reach'))
@@ -99,8 +82,8 @@ fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience Target
                             mode='lines+markers',
                             name='Lifetime Matched Audience Targeting Consumptions on Post'))
 
-#Linkedin
-#Data Frames and Sheet Names
+# LinkedIn graph ------------------------------------------------
+
 df2 = pd.read_excel('NPLF LinkedIn Q1.xlsx', sheet_name = [0,1,2,3,4])
 df3 = pd.read_excel('NPLF LinkedIn Q1.xlsx', sheet_name = 'Company size')
 df4 = pd.read_excel('NPLF LinkedIn Q1.xlsx', sheet_name = 'Update metrics (aggregated)')
@@ -116,6 +99,7 @@ fig6 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Reactions (organic)']
 fig8 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Engagement rate (organic)'], mode='lines+markers', line_color="#F5A10E"))
 fig11 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Engagement rate (sponsored)'], mode='lines+markers', line_color="#0EF596"))
 fig10 = go.Figure()
+fig10.update_layout(width=995, height= 500)
 
 #Quarter 1 (april to june)
 
@@ -138,8 +122,6 @@ fig10.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (sponsored)']
                             mode='lines+markers', name='Engagement rate (sponsored)'))
                             
 
-
-
 # default rangeslider/graph values
 min_value = '2020-01-01'
 max_value = '2020-12-01'
@@ -155,65 +137,16 @@ def set_rangeslider(minValue, maxValue):
     date_mark = {i: dates[i] for i in range(0, 12)}
     # print(date_mark)
     return date_mark, dates
-# default rangeslider/graph values
-min_value = '2020-01-01'
-max_value = '2020-12-01'
-dates = pd.date_range(min_value, max_value, freq='MS').strftime("%Y-%b").tolist()
-date_mark = {i: dates[i] for i in range(0, 12)}
 
-
-
-# navbar definition
-sticky_navbar = dbc.NavbarSimple(
-    children=[
-        dbc.DropdownMenu(
-            children=[
-                dbc.DropdownMenuItem("Years", header=True),
-                dbc.DropdownMenuItem("First", href='/apps/2020'),
-                dbc.DropdownMenuItem("First", href='/apps/2021'),
-                dbc.DropdownMenuItem("Second", href='/apps/2022'),
-                dbc.DropdownMenuItem("Third", href='/apps/2023'),
-            ],
-            nav=True,
-            in_navbar=True,
-            label="Years",
-        ),
-    ],
-    brand="Nashville Public Library Foundation",
-    color="dark",
-    dark=True,
-    sticky="top",
-)
-
-badge = html.Div(
-    [
-        dbc.Badge("NPLF Marketing Dashboard"),
-    ],
-    className="badge",
-)
-
-# button group definitions
-vertical_navbar = dbc.ButtonGroup(
-    [
-        dbc.Button("Overview", href="/apps/second"),
-        dbc.Button("Reach"),
-        dbc.Button("Impressions"),
-        dbc.Button("Visits"),
-        dbc.Button("Leads"),
-        dbc.Button("Customers by Marketing"),
-        dbc.Button("Conversions"),
-
-    ],
-    vertical=True,
-    className="navbar-vertical",
-)
 
 # app and layout definition
 app.layout = html.Div([
     html.Div([
+         html.Div([
+            html.H2('Summary of January - December 2020'),
+        ], style={"marginTop" : "50px"}),
         # first graph -- Twitter
         html.Div([
-            html.H3('Summary of Jan 1 - Dec 2020'),
             dcc.Graph(
                 id='g7',
                 figure=fig7,
