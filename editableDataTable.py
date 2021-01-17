@@ -144,9 +144,6 @@ fig7.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (sponsored)'],
                             
 
 
-
-#fig7.show()
-
 # default rangeslider/graph values
 min_value = '2020-01-01'
 max_value = '2020-12-01'
@@ -162,11 +159,13 @@ def set_rangeslider(minValue, maxValue):
     date_mark = {i: dates[i] for i in range(0, 12)}
     # print(date_mark)
     return date_mark, dates
+
+
 # default rangeslider/graph values
-min_value = '2020-01-01'
-max_value = '2020-12-01'
-dates = pd.date_range(min_value, max_value, freq='MS').strftime("%Y-%b").tolist()
-date_mark = {i: dates[i] for i in range(0, 12)}
+# min_value = '2020-01-01'
+# max_value = '2020-12-01'
+# dates = pd.date_range(min_value, max_value, freq='MS').strftime("%Y-%b").tolist()
+# date_mark = {i: dates[i] for i in range(0, 12)}
 
 
 
@@ -226,7 +225,7 @@ app.layout = html.Div([
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
-    print(pathname)
+    print("pathname = ", pathname)
     if pathname == '/apps/year2021':
         return year2021.app.layout
     elif pathname == '/apps/year2022':
@@ -241,10 +240,8 @@ def display_page(pathname):
 
 @app.callback(Output('g7', 'figure'), [Input('slider-one', 'value'), Input('slider-one', 'marks')])
 def update_graph(X, dates):
-    # print("X: ", X)
-    # print("dates: ", dates)
+
     dates = list(dates.values())
-    # print("dates as list", dates)
 
     df2 = df[(df.Date >= dates[X[0]]) & (df.Date <= dates[X[1]])]
     trace_1 = go.Scatter(x=df2.Date, y=df2['impressions'],
@@ -279,10 +276,8 @@ def update_graph(X, dates):
 
 @app.callback(Output('g9', 'figure'), [Input('slider-two', 'value'), Input('slider-two', 'marks')])
 def update_graph_2(X, dates):
-    print("X: ", X)
-    print("dates: ", dates)
+
     dates = list(dates.values())
-    print("dates as list", dates)
 
     df2 = df1[(df1.Date >= dates[X[0]]) & (df1.Date <= dates[X[1]])]
     trace_1 = go.Scatter(x=df2.Date, y=df2['Lifetime Post Total Reach'],
@@ -308,17 +303,10 @@ def update_graph_2(X, dates):
 
 @app.callback(Output('g10', 'figure'), [Input('slider-three', 'value'), Input('slider-three', 'marks')])
 def update_graph_3(X, dates):
-    print("X: ", X)
-    print("dates: ", dates)
-    dates = list(dates.values())
-    print("dates as list", dates)
 
-    print("LinkedIn Dates", df4.Date)
+    dates = list(dates.values())
 
     new_data = df4[(df4.Date >= dates[X[0]]) & (df4.Date <= dates[X[1]])]
-    print(dates[X[0]], dates[X[1]])
-    print("NEW DATA", new_data)
-    print("hello")
     trace_1 = plot.Scatter(x=new_data.Date, y=df4['Impressions (organic)'],
                                 mode='lines+markers',
                                 name= 'Impressions (organic)')
