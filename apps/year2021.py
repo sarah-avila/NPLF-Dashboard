@@ -98,7 +98,36 @@ fig6 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Reactions (organic)']
 fig8 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Engagement rate (organic)'], mode='lines+markers', line_color="#F5A10E"))
 fig11 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Engagement rate (sponsored)'], mode='lines+markers', line_color="#0EF596"))
 fig10 = go.Figure()
-fig10.update_layout(title="LinkedIn", width=995, height= 500)
+fig10.update_layout(
+    title_text="LinkedIn",
+    font_family="'Poppins', sans-serif",
+    font_color="black",
+    font_size= 15,
+    title_font_family="'Poppins', sans-serif",
+    title_font_color="brown",
+    title_font_size = 35,
+    title = dict (
+    xanchor = 'left'
+    ),
+    
+      legend=dict(
+        x=1.5,
+        y=0.5,
+        valign = "middle",
+       xanchor = "right",
+#        yanchor = "top",
+#        traceorder="reversed",
+        
+        bgcolor="LightSteelBlue",
+        bordercolor="Black",
+        borderwidth=2
+    ),
+    legend_title="Legend Title",
+    legend_title_font_color="brown",
+    legend_title_font_size=20,
+ width=995,
+ height= 500
+ )
 
 #Quarter 1 (april to june)
 

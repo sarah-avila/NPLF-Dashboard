@@ -32,7 +32,9 @@ auth = dash_auth.BasicAuth(
 # Twitter Layout
 twitterLayout = go.Layout(
     title="Twitter"
-)
+                )
+
+
 # Twitter Excel Sheet
 df = pd.read_excel('NPLF Twitter Q1andQ2.xlsx')
 
@@ -47,7 +49,32 @@ df1 = pd.read_excel('Facebook Posts Q1andQ2.xlsx')
 
 # LinkedIn Layout
 linkedinLayout = go.Layout(
-    title="LinkedIn"
+    title_text="LinkedIn",
+    font_family="'Poppins', sans-serif",
+    font_color="black",
+    font_size= 15,
+    title_font_family="'Poppins', sans-serif",
+    title_font_color="brown",
+    title_font_size = 35,
+    title = dict (
+    xanchor = 'left'
+    ),
+    
+      legend=dict(
+        x=1.5,
+        y=0.5,
+        valign = "middle",
+       xanchor = "right",
+#        yanchor = "top",
+#        traceorder="reversed",
+        
+        bgcolor="LightSteelBlue",
+        bordercolor="Black",
+        borderwidth=2
+    ),
+    legend_title="Legend Title",
+    legend_title_font_color="brown",
+    legend_title_font_size=20
 )
 # Linkedin Excel Sheets
 df2 = pd.read_excel('NPLF LinkedIn Q1.xlsx', sheet_name = [0,1,2,3,4])
@@ -82,9 +109,10 @@ sticky_navbar = dbc.NavbarSimple(
     ],
     brand="Nashville Public Library Foundation",
     brand_href='https://nplf.org/',
-    color="dark",
+    color="darkblue",
     dark=True,
     sticky="top",
+    
 )
 
 # app layout
@@ -92,7 +120,17 @@ app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     sticky_navbar,
     html.Div(id='page-content'),
-])
+], style={
+
+'background-image': 'url("http://nashvillepubliclibrary.org/wp-content/themes/alyeska-puppetfestival/assets/images/nplf-logo-color-on-black.png")',
+'background-repeat': 'no-repeat',
+'background-position': 'left bottom',
+'background-size': '290px 70px',
+
+}
+
+)
+
 
 # page navigation ---------------------------------------------------------
 
@@ -190,6 +228,7 @@ def update_graph_3(X, dates):
     trace_8 = plot.Scatter(x=new_data.Date, y=df4['Engagement rate (sponsored)'],
                                 mode='lines+markers', name='Engagement rate (sponsored)')
     fig2 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6, trace_7, trace_8], layout=linkedinLayout)
+
     return fig2
 
 if __name__ == '__main__':
