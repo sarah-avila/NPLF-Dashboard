@@ -52,6 +52,7 @@ fig7.add_trace(go.Scatter(trace5,
 fig7.add_trace(go.Scatter(trace6,
                             mode='lines+markers', name='Media Engagements'))
 
+
 # Facebook graph ------------------------------------------------
 
 df1 = pd.read_excel('FacebookPosts2021.xlsx')

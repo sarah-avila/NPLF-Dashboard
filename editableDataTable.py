@@ -31,7 +31,32 @@ auth = dash_auth.BasicAuth(
 
 # Twitter Layout
 twitterLayout = go.Layout(
-    title="Twitter"
+    title_text="Twitter",
+    font_family="'Poppins', sans-serif",
+    font_color="black",
+    font_size= 15,
+    title_font_family="'Poppins', sans-serif",
+    title_font_color="black",
+    title_font_size = 35,
+    title = dict (
+    xanchor = 'left'
+    ),
+    
+      legend=dict(
+        x=1.3,
+        y=0.5,
+        valign = "middle",
+       xanchor = "right",
+#        yanchor = "top",
+#        traceorder="reversed",
+        
+        bgcolor="white",
+        bordercolor="Black",
+        borderwidth=2
+    ),
+    legend_title="Twitter Data",
+    legend_title_font_color="brown",
+    legend_title_font_size=20
                 )
 
 
@@ -41,7 +66,33 @@ df = pd.read_excel('NPLF Twitter Q1andQ2.xlsx')
 
 # Facebook Layout
 facebookLayout = go.Layout(
-    title="Facebook"
+    
+    title_text="Facebook",
+    font_family="'Poppins', sans-serif",
+    font_color="black",
+    font_size= 15,
+    title_font_family="'Poppins', sans-serif",
+    title_font_color="black",
+    title_font_size = 35,
+    title = dict (
+    xanchor = 'left'
+    ),
+    
+      legend=dict(
+        x=1.7,
+        y=0.5,
+        valign = "middle",
+       xanchor = "right",
+#        yanchor = "top",
+#        traceorder="reversed",
+        
+        bgcolor="white",
+        bordercolor="Black",
+        borderwidth=2
+    ),
+    legend_title="Facebook Data",
+    legend_title_font_color="brown",
+    legend_title_font_size=20
 )
 # Facebook Excel Sheet
 df1 = pd.read_excel('Facebook Posts Q1andQ2.xlsx')
@@ -54,7 +105,7 @@ linkedinLayout = go.Layout(
     font_color="black",
     font_size= 15,
     title_font_family="'Poppins', sans-serif",
-    title_font_color="brown",
+    title_font_color="black",
     title_font_size = 35,
     title = dict (
     xanchor = 'left'
@@ -68,11 +119,11 @@ linkedinLayout = go.Layout(
 #        yanchor = "top",
 #        traceorder="reversed",
         
-        bgcolor="LightSteelBlue",
+        bgcolor="white",
         bordercolor="Black",
         borderwidth=2
     ),
-    legend_title="Legend Title",
+    legend_title="Linkedin Data",
     legend_title_font_color="brown",
     legend_title_font_size=20
 )
