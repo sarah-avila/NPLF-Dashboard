@@ -253,7 +253,10 @@ def update_graph(X, dates):
 
     dates = list(dates.values())
 
+    # print(df_twitter_2020.Date)
+
     df2 = df_twitter_2020[(df_twitter_2020.Date >= dates[X[0]]) & (df_twitter_2020.Date <= dates[X[1]])]
+    # print(df2)
     trace_1 = go.Scatter(x=df2.Date, y=df2['impressions'],
                         mode='lines+markers',
                         name='Impressions')
@@ -334,35 +337,32 @@ def update_graph_3(X, dates):
 
 # first section -- Twitter -----------------------
 
-# @app.callback(Output('twitter_2021', 'figure'), [Input('twitter-2021', 'value'), Input('twitter-2021', 'marks')])
-# def update_graph_4(X, dates):
+@app.callback(Output('twitter_2021', 'figure'), [Input('twitter-2021', 'value'), Input('twitter-2021', 'marks')])
+def update_graph_4(X, dates):
 
-#     dates = list(dates.values())
-#     print(X)
-#     print(dates)
+    dates = list(dates.values())
 
-#     df2 = df_twitter_2021[(df_twitter_2021.Date >= dates[X[0]]) & (df_twitter_2021.Date <= dates[X[1]])]
-#     print(df2)
-#     trace_1 = go.Scatter(x=df2.Date, y=df2['impressions'],
-#                         mode='lines+markers',
-#                         name='Impressions')
-#     trace_2 = go.Scatter(x=df2.Date, y=df2['engagement rate'],
-#                         mode='lines+markers',
-#                         name='Engagement rate')
-#     trace_3 = go.Scatter(x=df2.Date, y=df2['detail expands'],
-#                         mode='lines+markers',
-#                         name='Detail expands')
-#     trace_4 = go.Scatter(x=df2.Date, y=df2['likes'],
-#                         mode='lines+markers',
-#                         name='Likes')
-#     trace_5 = go.Scatter(x=df2.Date, y=df2['media views'],
-#                         mode='lines+markers',
-#                         name='Media views')
-#     trace_6 = go.Scatter(x=df2.Date, y=df2['media engagements'],
-#                         mode='lines+markers',
-#                         name='Media engagements')
-#     fig1 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=twitterLayout)
-#     return fig1
+    df2 = df_twitter_2021[(df_twitter_2021.Date >= dates[X[0]])] #& (df_twitter_2021.Date <= dates[X[1]])]
+    trace_1 = go.Scatter(x=df2.Date, y=df2['impressions'],
+                        mode='lines+markers',
+                        name='Impressions')
+    trace_2 = go.Scatter(x=df2.Date, y=df2['engagement rate'],
+                        mode='lines+markers',
+                        name='Engagement rate')
+    trace_3 = go.Scatter(x=df2.Date, y=df2['detail expands'],
+                        mode='lines+markers',
+                        name='Detail expands')
+    trace_4 = go.Scatter(x=df2.Date, y=df2['likes'],
+                        mode='lines+markers',
+                        name='Likes')
+    trace_5 = go.Scatter(x=df2.Date, y=df2['media views'],
+                        mode='lines+markers',
+                        name='Media views')
+    trace_6 = go.Scatter(x=df2.Date, y=df2['media engagements'],
+                        mode='lines+markers',
+                        name='Media engagements')
+    fig1 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=twitterLayout)
+    return fig1
 
 # second section -- Facebook -----------------------
 
