@@ -28,8 +28,8 @@ fig3 = plot.Figure(
 fig4 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['likes'], mode='lines+markers', line_color="#9467bd"))
 fig5 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['media views'], mode='lines+markers', line_color="#ffa15a"))
 fig6 = plot.Figure(data=plot.Scatter(x=df['Date'], y=df['media engagements'], mode='lines+markers', line_color="#1cd3f3"))
-fig7 = go.Figure()
-fig7.update_layout(title="Twitter", width=995, height= 500)
+twitter_2022 = go.Figure()
+twitter_2022.update_layout(title="Twitter", width=995, height= 500)
 
 trace1 = fig1['data'][0]
 trace2 = fig2['data'][0]
@@ -38,18 +38,18 @@ trace4 = fig4['data'][0]
 trace5 = fig5['data'][0]
 trace6 = fig6['data'][0]
 
-fig7.add_trace(go.Scatter(trace1,
+twitter_2022.add_trace(go.Scatter(trace1,
                             mode='lines+markers',
                             name='Impressions'))
-fig7.add_trace(go.Scatter(trace2,
+twitter_2022.add_trace(go.Scatter(trace2,
                             mode='lines+markers', name='Engagement rate'))
-fig7.add_trace(go.Scatter(trace3,
+twitter_2022.add_trace(go.Scatter(trace3,
                             mode='lines+markers', name='Detail expands'))
-fig7.add_trace(go.Scatter(trace4,
+twitter_2022.add_trace(go.Scatter(trace4,
                             mode='lines+markers', name='Likes'))
-fig7.add_trace(go.Scatter(trace5,
+twitter_2022.add_trace(go.Scatter(trace5,
                             mode='lines+markers', name='Media Views'))
-fig7.add_trace(go.Scatter(trace6,
+twitter_2022.add_trace(go.Scatter(trace6,
                             mode='lines+markers', name='Media Engagements'))
 
 # Facebook graph ------------------------------------------------
@@ -63,21 +63,21 @@ fig4 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience
 fig5 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience Targeting Consumptions on Post'], mode='lines+markers', line_color="#ffa15a"))
 fig6 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Post Impressions by people who have liked your Page'], mode='lines+markers', line_color="#1cd3f3"))
 fig8 = go.Figure(data=go.Scatter(x=df1['Date'], y=df1['Lifetime Post reach by people who like your Page'], mode='lines+markers',line_color="#1cd3f3" ))
-fig9 = go.Figure()
-fig9.update_layout(title="Facebook", width=995, height= 500)
-fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Post Total Reach'],
+facebook_2022 = go.Figure()
+facebook_2022.update_layout(title="Facebook", width=995, height= 500)
+facebook_2022.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Post Total Reach'],
                             mode='lines+markers',
                             name='Lifetime Post Total Reach'))
-fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Post Total Impressions'],
+facebook_2022.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Post Total Impressions'],
                             mode='lines+markers',
                             name='Lifetime Post Total Impressions'))
-fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Engaged Users'],
+facebook_2022.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Engaged Users'],
                             mode='lines+markers',
                             name='Lifetime Engaged Users'))
-fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience Targeting Consumers on Post'],
+facebook_2022.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience Targeting Consumers on Post'],
                             mode='lines+markers',
                             name='Lifetime Matched Audience Targeting Consumers on Post'))
-fig9.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience Targeting Consumptions on Post'],
+facebook_2022.add_trace(go.Scatter(x=df1['Date'], y=df1['Lifetime Matched Audience Targeting Consumptions on Post'],
                             mode='lines+markers',
                             name='Lifetime Matched Audience Targeting Consumptions on Post'))
 
@@ -97,27 +97,27 @@ fig5 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Clicks (sponsored)'],
 fig6 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Reactions (organic)'], mode='lines+markers', line_color="#1cd3f3"))
 fig8 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Engagement rate (organic)'], mode='lines+markers', line_color="#F5A10E"))
 fig11 = plot.Figure(data=plot.Scatter(y=df4['Date'], x=df4['Engagement rate (sponsored)'], mode='lines+markers', line_color="#0EF596"))
-fig10 = go.Figure()
-fig10.update_layout(title="LinkedIn", width=995, height= 500)
+linkedin_2022 = go.Figure()
+linkedin_2022.update_layout(title="LinkedIn", width=995, height= 500)
 
 #Quarter 1 (april to june)
 
-fig10.add_trace(plot.Scatter(x=df4['Date'], y=df4['Impressions (organic)'],
+linkedin_2022.add_trace(plot.Scatter(x=df4['Date'], y=df4['Impressions (organic)'],
                             mode='lines+markers',
-                            name= 'Impressions (organic)'))#row = 3, col = 1)
-fig10.add_trace(plot.Scatter(x=df4['Date'], y=df4['Impressions (sponsored)'],
+                            name= 'Impressions (organic)'))
+linkedin_2022.add_trace(plot.Scatter(x=df4['Date'], y=df4['Impressions (sponsored)'],
                             mode='lines+markers', name='Impressions (sponsored)'))
-fig10.add_trace(plot.Scatter(x=df4['Date'], y=df4['Unique impressions (organic)'],
+linkedin_2022.add_trace(plot.Scatter(x=df4['Date'], y=df4['Unique impressions (organic)'],
                             mode='lines+markers', name='Unique impressions (organic)'))
-fig10.add_trace(plot.Scatter(x=df4['Date'], y=df4['Clicks (organic)'],
+linkedin_2022.add_trace(plot.Scatter(x=df4['Date'], y=df4['Clicks (organic)'],
                             mode='lines+markers', name='Clicks (organic)'))
-fig10.add_trace(plot.Scatter(x=df4['Date'], y=df4['Clicks (sponsored)'],
+linkedin_2022.add_trace(plot.Scatter(x=df4['Date'], y=df4['Clicks (sponsored)'],
                             mode='lines+markers', name='Clicks (sponsored)'))
-fig10.add_trace(plot.Scatter(x=df4['Date'], y=df4['Reactions (organic)'],
+linkedin_2022.add_trace(plot.Scatter(x=df4['Date'], y=df4['Reactions (organic)'],
                             mode='lines+markers', name='Reactions (organic)'))
-fig10.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (organic)'],
+linkedin_2022.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (organic)'],
                             mode='lines+markers', name='Engagement rate (organic)'))
-fig10.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (sponsored)'],
+linkedin_2022.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (sponsored)'],
                             mode='lines+markers', name='Engagement rate (sponsored)'))
 
 
@@ -137,8 +137,8 @@ app.layout = html.Div([
         # first graph -- Twitter
         html.Div([
             dcc.Graph(
-                id='g7',
-                figure=fig7,
+                id='twitter_2022',
+                figure=twitter_2022,
             )], className="heading"),
 
         # first range slider with input boxes
@@ -148,7 +148,7 @@ app.layout = html.Div([
         html.Div(
         [
             dcc.RangeSlider(
-                id='slider',
+                id='twitter-2022',
                 marks=date_mark,
                 min=0,
                 max=11,
@@ -160,8 +160,8 @@ app.layout = html.Div([
         # second graph -- Facebook
          html.Div([
             dcc.Graph(
-                id='g9',
-                figure=fig9,
+                id='facebook_2022',
+                figure=facebook_2022,
             )], className="heading"),
 
         # second range slider with input boxes
@@ -171,7 +171,7 @@ app.layout = html.Div([
         html.Div(
         [
             dcc.RangeSlider(
-                id='slider',
+                id='facebook-2022',
                 marks=date_mark,
                 min=0,
                 max=11,
@@ -183,8 +183,8 @@ app.layout = html.Div([
         # third graph -- LinkedIn
         html.Div([
             dcc.Graph(
-                id='g10',
-                figure=fig10,
+                id='linkedin_2022',
+                figure=linkedin_2022,
             )], className="heading"),
         # third range slider with input boxes
         html.Div([
@@ -193,7 +193,7 @@ app.layout = html.Div([
         html.Div(
         [
             dcc.RangeSlider(
-                id='slider',
+                id='linkedin-2022',
                 marks=date_mark,
                 min=0,
                 max=11,
