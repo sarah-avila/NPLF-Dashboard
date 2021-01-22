@@ -12,7 +12,7 @@ import dash_core_components as dcc
 from plotly.subplots import make_subplots
 import plotly
 import dash_auth
-from apps import year2020, year2021, year2022, year2023
+from pages import year2020, year2021, year2022, year2023
 from dash.dependencies import Input, Output
 import numpy as np
 
@@ -153,28 +153,6 @@ date_mark = {i: dates[i] for i in range(0, 12)}
 
 
 # navbar definitions
-sticky_navbar = dbc.NavbarSimple(
-    children=[
-        dbc.DropdownMenu(
-            children=[
-                dbc.DropdownMenuItem("Years", header=True),
-                dbc.DropdownMenuItem("2020", href='/apps/year2020'),
-                dbc.DropdownMenuItem("2021", href='/apps/year2021'),
-                dbc.DropdownMenuItem("2022", href='/apps/year2022'),
-                dbc.DropdownMenuItem("2023", href='/apps/year2023'),
-            ],
-            nav=True,
-            in_navbar=True,
-            label="Years",
-        ),
-    ],
-    brand="Nashville Public Library Foundation",
-    brand_href='https://nplf.org/',
-    color="darkblue",
-    dark=True,
-    sticky="top", 
-)
-
 NPLF_LOGO = "https://nplf.org/content/uploads/2016/01/logo.png"
 
 logo_navbar = dbc.Navbar(
@@ -189,10 +167,10 @@ logo_navbar = dbc.Navbar(
                         children =
                         [
                             dbc.DropdownMenuItem("Years", header=True),
-                            dbc.DropdownMenuItem("2020", href='/apps/year2020'),
-                            dbc.DropdownMenuItem("2021", href='/apps/year2021'),
-                            dbc.DropdownMenuItem("2022", href='/apps/year2022'),
-                            dbc.DropdownMenuItem("2023", href='/apps/year2023'),
+                            dbc.DropdownMenuItem("2020", href='/pages/year2020'),
+                            dbc.DropdownMenuItem("2021", href='/pages/year2021'),
+                            dbc.DropdownMenuItem("2022", href='/pages/year2022'),
+                            dbc.DropdownMenuItem("2023", href='/pages/year2023'),
                         ],
                         nav=True,
                         in_navbar=True,
@@ -213,20 +191,9 @@ logo_navbar = dbc.Navbar(
 # app layout
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
-    # sticky_navbar,
     logo_navbar,
     html.Div(id='page-content'),
-], 
-#style={
-
-# 'background-image': 'url("http://nashvillepubliclibrary.org/wp-content/themes/alyeska-puppetfestival/assets/images/nplf-logo-color-on-black.png")',
-# 'background-repeat': 'no-repeat',
-# 'background-position': 'left bottom',
-# 'background-size': '290px 70px',
-
-# }
-
-)
+])
 
 
 # page navigation ---------------------------------------------------------
@@ -234,12 +201,11 @@ app.layout = html.Div([
 @app.callback(Output('page-content', 'children'),
               [Input('url', 'pathname')])
 def display_page(pathname):
-    print("pathname = ", pathname)
-    if pathname == '/apps/year2021':
+    if pathname == '/pages/year2021':
         return year2021.app.layout
-    elif pathname == '/apps/year2022':
+    elif pathname == '/pages/year2022':
         return year2022.app.layout
-    elif pathname == '/apps/year2023':
+    elif pathname == '/pages/year2023':
         return year2023.app.layout
     else:
         return year2020.app.layout
@@ -253,10 +219,7 @@ def update_graph(X, dates):
 
     dates = list(dates.values())
 
-    # print(df_twitter_2020.Date)
-
     df2 = df_twitter_2020[(df_twitter_2020.Date >= dates[X[0]]) & (df_twitter_2020.Date <= dates[X[1]])]
-    # print(df2)
     trace_1 = go.Scatter(x=df2.Date, y=df2['impressions'],
                         mode='lines+markers',
                         name='Impressions')
