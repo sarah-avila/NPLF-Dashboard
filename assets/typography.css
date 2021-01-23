@@ -2,10 +2,8 @@
 
 body {
     font-family: 'Roboto';
-}
-.container {
+    text-align: center;
     background-color: #f1f1f1;
-    height: 100%;
 }
 .heading {
     display: flex;
@@ -13,9 +11,16 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 30px;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    /* border: 2px solid red; */
 }
-.top {
-    /* margin-top: 100px; */
+.rangeSlider {
+    width: 60%;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    /* border: 2px solid yellow; */
 }
 .bottom {
     margin-bottom: 50px;
@@ -36,4 +41,5 @@ body {
     /* color: '#A9A9A9'; */
     color: grey;
     font-size: 15px;
+    margin-top: 30px;
 }
