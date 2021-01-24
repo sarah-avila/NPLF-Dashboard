@@ -12,7 +12,7 @@ import dash_core_components as dcc
 from plotly.subplots import make_subplots
 import plotly
 import dash_auth
-from pages import year2020, year2021, year2022, year2023
+from pages import year2020, year2021, year2022, year2023, year2024
 from dash.dependencies import Input, Output
 import numpy as np
 
@@ -37,18 +37,21 @@ df_twitter_2020 = pd.read_excel('NPLF Twitter Q1andQ2.xlsx')
 df_twitter_2021 = pd.read_excel('NPLF Twitter 2021.xlsx')
 df_twitter_2022 = pd.read_excel('NPLF Twitter 2022.xlsx')
 df_twitter_2023 = pd.read_excel('NPLF Twitter 2023.xlsx')
+df_twitter_2024 = pd.read_excel('NPLF Twitter 2024.xlsx')
 
 # Facebook
 df_facebook_2020 = pd.read_excel('Facebook Posts Q1andQ2.xlsx')
 df_facebook_2021 = pd.read_excel('FacebookPosts2021.xlsx')
 df_facebook_2022 = pd.read_excel('FacebookPosts2022.xlsx')
 df_facebook_2023 = pd.read_excel('FacebookPosts2023.xlsx')
+df_facebook_2024 = pd.read_excel('FacebookPosts2024.xlsx')
 
 # LinkedIn
 df_linkedin_2020 = pd.read_excel('NPLF LinkedIn Q1.xlsx', sheet_name = 'Update metrics (aggregated)')
 df_linkedin_2021 = pd.read_excel('NPLF Linkedin 2021.xlsx', sheet_name = 'Update metrics (aggregated)')
 df_linkedin_2022 = pd.read_excel('NPLF Linkedin 2022.xlsx', sheet_name = 'Update metrics (aggregated)')
 df_linkedin_2023 = pd.read_excel('NPLF Linkedin 2023.xlsx', sheet_name = 'Update metrics (aggregated)')
+df_linkedin_2024 = pd.read_excel('NPLF Linkedin 2024.xlsx', sheet_name = 'Update metrics (aggregated)')
 
 
 # Twitter Layout
@@ -172,6 +175,7 @@ logo_navbar = dbc.Navbar(
                             dbc.DropdownMenuItem("2021", href='/pages/year2021'),
                             dbc.DropdownMenuItem("2022", href='/pages/year2022'),
                             dbc.DropdownMenuItem("2023", href='/pages/year2023'),
+                            dbc.DropdownMenuItem("2024", href='/pages/year2024'),
                         ],
                         nav=True,
                         in_navbar=True,
@@ -208,6 +212,8 @@ def display_page(pathname):
         return year2022.app.layout
     elif pathname == '/pages/year2023':
         return year2023.app.layout
+    elif pathname == '/pages/year2024':
+        return year2024.app.layout
     else:
         return year2020.app.layout
 
@@ -555,6 +561,88 @@ def update_graph_12(X, dates):
 
     return fig2
 
+#                           ---------------------- 2024 PAGE -------------------------
+# first section -- Twitter -----------------------
+@app.callback(Output('twitter_2024', 'figure'), [Input('twitter-2024', 'value'), Input('twitter-2024', 'marks')])
+def update_graph_7(X, dates):
+
+    dates = list(dates.values())
+
+    df2 = df_twitter_2024[(df_twitter_2024.Date >= dates[X[0]]) & (df_twitter_2024.Date <= dates[X[1]])]
+    trace_1 = go.Scatter(x=df2.Date, y=df2['impressions'],
+                        mode='lines+markers',
+                        name='Impressions')
+    trace_2 = go.Scatter(x=df2.Date, y=df2['engagement rate'],
+                        mode='lines+markers',
+                        name='Engagement rate')
+    trace_3 = go.Scatter(x=df2.Date, y=df2['detail expands'],
+                        mode='lines+markers',
+                        name='Detail expands')
+    trace_4 = go.Scatter(x=df2.Date, y=df2['likes'],
+                        mode='lines+markers',
+                        name='Likes')
+    trace_5 = go.Scatter(x=df2.Date, y=df2['media views'],
+                        mode='lines+markers',
+                        name='Media views')
+    trace_6 = go.Scatter(x=df2.Date, y=df2['media engagements'],
+                        mode='lines+markers',
+                        name='Media engagements')
+    fig1 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6], layout=twitterLayout)
+    return fig1
+# second section -- Facebook -----------------------
+
+@app.callback(Output('facebook_2024', 'figure'), [Input('facebook-2024', 'value'), Input('facebook-2024', 'marks')])
+def update_graph_11(X, dates):
+
+    dates = list(dates.values())
+
+    df2 = df_facebook_2024[(df_facebook_2024.Date >= dates[X[0]]) & (df_facebook_2024.Date <= dates[X[1]])]
+    trace_1 = go.Scatter(x=df2.Date, y=df2['Lifetime Post Total Reach'],
+                                mode='lines+markers',
+                                name='Lifetime Post Total Reach')
+    trace_2 = go.Scatter(x=df2.Date, y=df2['Lifetime Post Total Impressions'],
+                                mode='lines+markers',
+                                name='Lifetime Post Total Impressions')
+    trace_3 = go.Scatter(x=df2.Date, y=df2['Lifetime Engaged Users'],
+                                mode='lines+markers',
+                                name='Lifetime Engaged Users')
+    trace_4 = go.Scatter(x=df2.Date, y=df2['Lifetime Matched Audience Targeting Consumers on Post'],
+                                mode='lines+markers',
+                                name='Lifetime Targeting Consumers on Post')
+    trace_5 = go.Scatter(x=df2.Date, y=df2['Lifetime Matched Audience Targeting Consumptions on Post'],
+                                mode='lines+markers',
+                                name='Lifetime Targeting Consumptions on Post')
+    fig2 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5], layout=facebookLayout)
+    return fig2
+
+# third section -- LinkedIn -----------------------
+
+@app.callback(Output('linkedin_2024', 'figure'), [Input('linkedin-2024', 'value'), Input('linkedin-2024', 'marks')])
+def update_graph_12(X, dates):
+
+    dates = list(dates.values())
+
+    new_data = df_linkedin_2024[(df_linkedin_2024.Date >= dates[X[0]]) & (df_linkedin_2024.Date <= dates[X[1]])]
+    trace_1 = plot.Scatter(x=new_data.Date, y=new_data['Impressions (organic)'],
+                                mode='lines+markers',
+                                name= 'Impressions (organic)')
+    trace_2 = plot.Scatter(x=new_data.Date, y=new_data['Impressions (sponsored)'],
+                                mode='lines+markers', name='Impressions (sponsored)')
+    trace_3 = plot.Scatter(x=new_data.Date, y=new_data['Unique impressions (organic)'],
+                                mode='lines+markers', name='Unique impressions (organic)')
+    trace_4 = plot.Scatter(x=new_data.Date, y=new_data['Clicks (organic)'],
+                                mode='lines+markers', name='Clicks (organic)')
+    trace_5 = plot.Scatter(x=new_data.Date, y=new_data['Clicks (sponsored)'],
+                                mode='lines+markers', name='Clicks (sponsored)')
+    trace_6 = plot.Scatter(x=new_data.Date, y=new_data['Reactions (organic)'],
+                                mode='lines+markers', name='Reactions (organic)')
+    trace_7 = plot.Scatter(x=new_data.Date, y=new_data['Engagement rate (organic)'],
+                                mode='lines+markers', name='Engagement rate (organic)')
+    trace_8 = plot.Scatter(x=new_data.Date, y=new_data['Engagement rate (sponsored)'],
+                                mode='lines+markers', name='Engagement rate (sponsored)')
+    fig2 = go.Figure(data=[trace_1, trace_2, trace_3, trace_4, trace_5, trace_6, trace_7, trace_8], layout=linkedinLayout)
+
+    return fig2
 
 
 
