@@ -317,7 +317,7 @@ def update_graph_4(X, dates):
 
     dates = list(dates.values())
 
-    df2 = df_twitter_2021[(df_twitter_2021.Date >= dates[X[0]])] #& (df_twitter_2021.Date <= dates[X[1]])]
+    df2 = df_twitter_2021[(df_twitter_2021.Date >= dates[X[0]]) & (df_twitter_2021.Date <= dates[X[1]])]
     trace_1 = go.Scatter(x=df2.Date, y=df2['impressions'],
                         mode='lines+markers',
                         name='Impressions')
