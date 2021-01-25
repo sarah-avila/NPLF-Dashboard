@@ -56,6 +56,8 @@ df_linkedin_2024 = pd.read_excel('NPLF Linkedin 2024.xlsx', sheet_name = 'Update
 
 # Twitter Layout
 twitterLayout = go.Layout(
+    width=995, 
+    height= 500,
     title_text="Twitter",
     font_family="'Poppins', sans-serif",
     font_color="black",
@@ -87,7 +89,8 @@ twitterLayout = go.Layout(
 
 # Facebook Layout
 facebookLayout = go.Layout(
-    
+    width=995, 
+    height= 500,
     title_text="Facebook",
     font_family="'Poppins', sans-serif",
     font_color="black",
@@ -120,6 +123,8 @@ facebookLayout = go.Layout(
 
 # LinkedIn Layout
 linkedinLayout = go.Layout(
+    width=995, 
+    height= 500,
     title_text="LinkedIn",
     font_family="'Poppins', sans-serif",
     font_color="black",
@@ -158,6 +163,7 @@ date_mark = {i: dates[i] for i in range(0, 12)}
 
 # navbar definitions
 NPLF_LOGO = "https://nplf.org/content/uploads/2016/01/logo.png"
+HELP_DOC = "https://docs.google.com/document/d/1y3fmjIyPUOn91nWUKN5uu8ILPQiEXNRv2yqhxcBHE1I/edit?pli=1"
 
 logo_navbar = dbc.Navbar(
     [
@@ -166,9 +172,8 @@ logo_navbar = dbc.Navbar(
             dbc.Row(
                 [
                     dbc.Col(html.Img(src=NPLF_LOGO, height="30px")),
-                    dbc.Col(dbc.NavbarBrand("Nashville Public Library Foundation", className="ml-2")),
+                    dbc.Col(dbc.NavbarBrand("Nashville Public Library Foundation", href="https://nplf.org/", className="ml-2")),
                     dbc.Col(dbc.DropdownMenu(
-                        children =
                         [
                             dbc.DropdownMenuItem("Years", header=True),
                             dbc.DropdownMenuItem("2020", href='/pages/year2020'),
@@ -177,17 +182,17 @@ logo_navbar = dbc.Navbar(
                             dbc.DropdownMenuItem("2023", href='/pages/year2023'),
                             dbc.DropdownMenuItem("2024", href='/pages/year2024'),
                         ],
-                        nav=True,
-                        in_navbar=True,
                         label="Years",
-                    ), style={'margin-left' :'1000px', 'margin-bottom': '20px'}),  
+                        color="light", 
+                        className="m-1",
+                    ), style={'margin-left' :'1100px'}),
+                    dbc.Col(dbc.Button("Help", href=HELP_DOC, color="light", className="mr-1"),)  
                 ],
                 align="center",
                 no_gutters=True,
             ),
         ),
     ],
-    # color="dark",
     dark=True,
     color="darkblue",
     sticky="top", 
