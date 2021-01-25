@@ -185,7 +185,7 @@ logo_navbar = dbc.Navbar(
                         label="Years",
                         color="light", 
                         className="m-1",
-                    ), style={'margin-left' :'1050px'}),
+                    ), style={'margin-left' :'1000px'}),
                     dbc.Col(dbc.Button("Help", href=HELP_DOC, color="light", className="mr-1"),)  
                 ],
                 align="center",
