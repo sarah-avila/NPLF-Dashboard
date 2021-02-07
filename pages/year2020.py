@@ -211,19 +211,9 @@ linkedin_2020.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (spon
 
 # default rangeslider/graph values
 min_value = '2020-01-01'
-max_value = '2020-12-01'
+max_value = '2021-01-01'
 dates = pd.date_range(min_value, max_value, freq='MS').strftime("%Y-%b").tolist()
-date_mark = {i: dates[i] for i in range(0, 12)}
-
-# date slider labels
-def set_rangeslider(minValue, maxValue):
-    print("enter set_rangeSlider", minValue, maxValue)
-    df['Date'] = pd.to_datetime(df.Date)
-    dates = pd.date_range(minValue, maxValue, freq='MS').strftime("%Y-%b").tolist()
-    # print(dates)
-    date_mark = {i: dates[i] for i in range(0, 12)}
-    # print(date_mark)
-    return date_mark, dates
+date_mark = {i: dates[i] for i in range(0, 13)}
 
 
 # app and layout definition
@@ -249,8 +239,8 @@ app.layout = html.Div([
                 id='twitter-2020',
                 marks=date_mark,
                 min=0,
-                max=11,
-                value=[0, 11],
+                max=12,
+                value=[0, 12],
                 allowCross=False
             ),
         ], className="rangeSlider"),
@@ -272,8 +262,8 @@ app.layout = html.Div([
                 id='facebook-2020',
                 marks=date_mark,
                 min=0,
-                max=11,
-                value=[0, 11],
+                max=12,
+                value=[0, 12],
                 allowCross=False
             ),
         ], className="rangeSlider"),
@@ -294,8 +284,8 @@ app.layout = html.Div([
                 id='linkedin-2020',
                 marks=date_mark,
                 min=0,
-                max=11,
-                value=[0, 11],
+                max=12,
+                value=[0, 12],
                 allowCross=False
             ),
         ], className="rangeSlider"),

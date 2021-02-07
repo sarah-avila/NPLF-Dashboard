@@ -156,9 +156,10 @@ linkedinLayout = go.Layout(
 
 # default rangeslider/graph values
 min_value = '2020-01-01'
-max_value = '2020-12-01'
+max_value = '2021-01-01'
 dates = pd.date_range(min_value, max_value, freq='MS').strftime("%Y-%b").tolist()
-date_mark = {i: dates[i] for i in range(0, 12)}
+print("dateee", dates)
+date_mark = {i: dates[i] for i in range(0, 13)}
 
 
 # navbar definitions

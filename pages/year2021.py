@@ -212,10 +212,10 @@ linkedin_2021.add_trace(plot.Scatter(x=df4['Date'], y=df4['Engagement rate (spon
 
 
 # default rangeslider/graph values
-min_value = '2021-01-01'
-max_value = '2021-12-01'
+min_value = '2020-01-01'
+max_value = '2021-01-01'
 dates = pd.date_range(min_value, max_value, freq='MS').strftime("%Y-%b").tolist()
-date_mark = {i: dates[i] for i in range(0, 12)}
+date_mark = {i: dates[i] for i in range(0, 13)}
 
 
 # app and layout definition
@@ -241,8 +241,8 @@ app.layout = html.Div([
                 id='twitter-2021',
                 marks=date_mark,
                 min=0,
-                max=11,
-                value=[0, 11],
+                max=12,
+                value=[0, 12],
                 allowCross=False
             ),
         ], className="rangeSlider"),
@@ -264,8 +264,8 @@ app.layout = html.Div([
                 id='facebook-2021',
                 marks=date_mark,
                 min=0,
-                max=11,
-                value=[0, 11],
+                max=12,
+                value=[0, 12],
                 allowCross=False
             ),
         ], className="rangeSlider"),
@@ -286,8 +286,8 @@ app.layout = html.Div([
                 id='linkedin-2021',
                 marks=date_mark,
                 min=0,
-                max=11,
-                value=[0, 11],
+                max=12,
+                value=[0, 12],
                 allowCross=False
             ),
         ], className="rangeSlider"),
